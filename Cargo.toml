@@ -5,7 +5,7 @@ edition = "2024"
 rust-version = "1.88"
 description = "Google services from the terminal"
 license = "Apache-2.0"
-repository = "https://github.com/joko76ers/gogcli"
+repository = "https://github.com/joosuite/joog"
 
 [features]
 live-test-diagnostics = []

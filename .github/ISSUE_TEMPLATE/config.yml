@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Security vulnerability
-    url: https://github.com/joko76ers/gogcli/blob/main/SECURITY.md
+    url: https://github.com/joosuite/joog/blob/main/SECURITY.md
     about: Follow the private reporting instructions before sharing vulnerability details.

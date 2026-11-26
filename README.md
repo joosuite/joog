@@ -118,7 +118,7 @@ preserving its result data.
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for development checks and pull requests,
 and the [code of conduct](CODE_OF_CONDUCT.md) for participation guidelines.
 Report ordinary bugs through
-[GitHub issues](https://github.com/joko76ers/gogcli/issues).
+[GitHub issues](https://github.com/joosuite/joog/issues).
 For vulnerabilities, follow [SECURITY.md](SECURITY.md).
 
 ## License
