@@ -1,0 +1,12 @@
+{
+  "presentationId": "PRESENTATION_ID",
+  "requests": [
+    {
+      "createSlide": {
+        "slideLayoutReference": {
+          "predefinedLayout": "BLANK"
+        }
+      }
+    }
+  ]
+}

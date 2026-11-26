@@ -1,0 +1,4021 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:joog:file:mail",
+  "title": "Gmail request parameters for joog --file",
+  "description": "Request parameters and optional body for each supported command. Method definitions are in $defs.",
+  "type": "object",
+  "x-google-api": "gmail",
+  "x-google-api-version": "v1",
+  "x-google-discovery-source": "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest",
+  "x-google-discovery-revision": "20261116",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/profile"
+    },
+    {
+      "$ref": "#/$defs/drafts.create"
+    },
+    {
+      "$ref": "#/$defs/drafts.delete"
+    },
+    {
+      "$ref": "#/$defs/drafts.get"
+    },
+    {
+      "$ref": "#/$defs/drafts.list"
+    },
+    {
+      "$ref": "#/$defs/drafts.send"
+    },
+    {
+      "$ref": "#/$defs/drafts.update"
+    },
+    {
+      "$ref": "#/$defs/history.list"
+    },
+    {
+      "$ref": "#/$defs/labels.create"
+    },
+    {
+      "$ref": "#/$defs/labels.delete"
+    },
+    {
+      "$ref": "#/$defs/labels.get"
+    },
+    {
+      "$ref": "#/$defs/labels.list"
+    },
+    {
+      "$ref": "#/$defs/labels.patch"
+    },
+    {
+      "$ref": "#/$defs/labels.update"
+    },
+    {
+      "$ref": "#/$defs/messages.batch-delete"
+    },
+    {
+      "$ref": "#/$defs/messages.batch-modify"
+    },
+    {
+      "$ref": "#/$defs/messages.delete"
+    },
+    {
+      "$ref": "#/$defs/messages.get"
+    },
+    {
+      "$ref": "#/$defs/messages.import"
+    },
+    {
+      "$ref": "#/$defs/messages.insert"
+    },
+    {
+      "$ref": "#/$defs/messages.list"
+    },
+    {
+      "$ref": "#/$defs/messages.modify"
+    },
+    {
+      "$ref": "#/$defs/messages.send"
+    },
+    {
+      "$ref": "#/$defs/messages.trash"
+    },
+    {
+      "$ref": "#/$defs/messages.untrash"
+    },
+    {
+      "$ref": "#/$defs/messages.attachments.get"
+    },
+    {
+      "$ref": "#/$defs/threads.delete"
+    },
+    {
+      "$ref": "#/$defs/threads.get"
+    },
+    {
+      "$ref": "#/$defs/threads.list"
+    },
+    {
+      "$ref": "#/$defs/threads.modify"
+    },
+    {
+      "$ref": "#/$defs/threads.trash"
+    },
+    {
+      "$ref": "#/$defs/threads.untrash"
+    }
+  ],
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.getProfile",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "profile"
+    },
+    "drafts.create": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Draft"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.create",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "drafts.create",
+      "x-cli-compose-path": [
+        "message",
+        "raw"
+      ],
+      "description": "Accepts structured compose input or the existing Google request body. Joog converts compose to base64url MIME before validating the Google body. Compose conflicts with raw MIME content and media uploads.",
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "compose",
+              "body"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "required": [
+                  "message"
+                ],
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "anyOf": [
+                      {
+                        "required": [
+                          "raw"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "payload"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drafts.delete": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.delete",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "drafts.delete"
+    },
+    "drafts.get": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "minimal",
+            "full",
+            "raw",
+            "metadata"
+          ],
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.get",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "drafts.get"
+    },
+    "drafts.list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "includeSpamTrash": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "maxResults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string",
+              "pattern": "^[+-]?[0-9]+$"
+            }
+          ],
+          "x-location": "query"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "q": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.list",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "drafts.list"
+    },
+    "drafts.send": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Draft"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.send",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "x-required-body-fields": [
+        "id"
+      ],
+      "title": "drafts.send",
+      "x-cli-compose-path": [
+        "message",
+        "raw"
+      ]
+    },
+    "drafts.update": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Draft"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.drafts.update",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "drafts.update",
+      "x-cli-compose-path": [
+        "message",
+        "raw"
+      ],
+      "description": "Accepts structured compose input or the existing Google request body. Joog converts compose to base64url MIME before validating the Google body. Compose conflicts with raw MIME content and media uploads.",
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "compose",
+              "body"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "required": [
+                  "message"
+                ],
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "anyOf": [
+                      {
+                        "required": [
+                          "raw"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "payload"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "history.list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "historyTypes": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "messageAdded",
+                "messageDeleted",
+                "labelAdded",
+                "labelRemoved"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "messageAdded",
+                  "messageDeleted",
+                  "labelAdded",
+                  "labelRemoved"
+                ]
+              }
+            }
+          ],
+          "x-location": "query"
+        },
+        "labelId": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "maxResults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string",
+              "pattern": "^[+-]?[0-9]+$"
+            }
+          ],
+          "x-location": "query"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "startHistoryId": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.history.list",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "history.list"
+    },
+    "labels.create": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Label"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.create",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "x-required-body-fields": [
+        "labelListVisibility",
+        "messageListVisibility",
+        "name"
+      ],
+      "title": "labels.create"
+    },
+    "labels.delete": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.delete",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "labels.delete"
+    },
+    "labels.get": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.get",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "labels.get"
+    },
+    "labels.list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.list",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "labels.list"
+    },
+    "labels.patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Label"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.patch",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "labels.patch"
+    },
+    "labels.update": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Label"
+        }
+      },
+      "x-google-method-id": "gmail.users.labels.update",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "x-required-body-fields": [
+        "id",
+        "labelListVisibility",
+        "messageListVisibility",
+        "name"
+      ],
+      "title": "labels.update"
+    },
+    "messages.batch-delete": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/BatchDeleteMessagesRequest"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.batchDelete",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "messages.batch-delete"
+    },
+    "messages.batch-modify": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/BatchModifyMessagesRequest"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.batchModify",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "messages.batch-modify"
+    },
+    "messages.delete": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.delete",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "messages.delete"
+    },
+    "messages.get": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "minimal",
+            "full",
+            "raw",
+            "metadata"
+          ],
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "metadataHeaders": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.get",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "messages.get"
+    },
+    "messages.import": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deleted": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "internalDateSource": {
+          "type": "string",
+          "enum": [
+            "receivedTime",
+            "dateHeader"
+          ],
+          "x-location": "query"
+        },
+        "neverMarkSpam": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "processForCalendar": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Message"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.import",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "messages.import",
+      "x-cli-compose-path": [
+        "raw"
+      ]
+    },
+    "messages.insert": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deleted": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "internalDateSource": {
+          "type": "string",
+          "enum": [
+            "receivedTime",
+            "dateHeader"
+          ],
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Message"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.insert",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "x-required-body-fields": [
+        "raw"
+      ],
+      "title": "messages.insert",
+      "x-cli-compose-path": [
+        "raw"
+      ]
+    },
+    "messages.list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "includeSpamTrash": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "labelIds": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "x-location": "query"
+        },
+        "maxResults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string",
+              "pattern": "^[+-]?[0-9]+$"
+            }
+          ],
+          "x-location": "query"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "q": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.list",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "messages.list"
+    },
+    "messages.modify": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/ModifyMessageRequest"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.modify",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "messages.modify"
+    },
+    "messages.send": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/Message"
+        },
+        "compose": {
+          "$ref": "#/x-cli-types/MailComposition"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.send",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "x-required-body-fields": [
+        "raw"
+      ],
+      "title": "messages.send",
+      "x-cli-compose-path": [
+        "raw"
+      ],
+      "description": "Accepts structured compose input or the existing Google request body. Joog converts compose to base64url MIME before validating the Google body. Compose conflicts with raw MIME content and media uploads.",
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "compose",
+              "body"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "anyOf": [
+                  {
+                    "required": [
+                      "raw"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "payload"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "messages.trash": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.trash",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "messages.trash"
+    },
+    "messages.untrash": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.untrash",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "messages.untrash"
+    },
+    "messages.attachments.get": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "messageId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.messages.attachments.get",
+      "x-required-request-parameters": [
+        "id",
+        "messageId",
+        "userId"
+      ],
+      "title": "messages.attachments.get"
+    },
+    "threads.delete": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.delete",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "threads.delete"
+    },
+    "threads.get": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "full",
+            "metadata",
+            "minimal"
+          ],
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "metadataHeaders": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.get",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "threads.get"
+    },
+    "threads.list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "includeSpamTrash": {
+          "enum": [
+            true,
+            false,
+            "true",
+            "false"
+          ],
+          "x-location": "query"
+        },
+        "labelIds": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "x-location": "query"
+        },
+        "maxResults": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string",
+              "pattern": "^[+-]?[0-9]+$"
+            }
+          ],
+          "x-location": "query"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "q": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.list",
+      "x-required-request-parameters": [
+        "userId"
+      ],
+      "title": "threads.list"
+    },
+    "threads.modify": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "body": {
+          "$ref": "#/x-body-types/ModifyThreadRequest"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.modify",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "threads.modify"
+    },
+    "threads.trash": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.trash",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "threads.trash"
+    },
+    "threads.untrash": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "type": "string",
+          "x-location": "query"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "x-location": "path"
+        }
+      },
+      "x-google-method-id": "gmail.users.threads.untrash",
+      "x-required-request-parameters": [
+        "id",
+        "userId"
+      ],
+      "title": "threads.untrash"
+    }
+  },
+  "x-google-api-root": "https://gmail.googleapis.com/",
+  "x-google-service-path": "",
+  "x-google-parameters": {
+    "key": {
+      "type": "string",
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
+    },
+    "$.xgafv": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
+    },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "type": "boolean",
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "location": "query"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string",
+      "location": "query"
+    },
+    "alt": {
+      "description": "Data format for response.",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "location": "query",
+      "default": "json",
+      "type": "string"
+    },
+    "uploadType": {
+      "type": "string",
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
+    },
+    "callback": {
+      "type": "string",
+      "location": "query",
+      "description": "JSONP"
+    },
+    "upload_protocol": {
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
+    }
+  },
+  "x-body-types": {
+    "BatchDeleteMessagesRequest": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "The IDs of the messages to delete.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BatchModifyMessagesRequest": {
+      "type": "object",
+      "properties": {
+        "addClassificationLabels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of Classification Label values to add. If a Classification Label with the same label ID is already applied to the message, fields with existing field IDs will be updated and fields with new field IDs will be added. There's a limit of 20 Classification Label values per request. If the message is already classified and the final total number of Classification Label values exceeds the maximum allowed number of Classification Label values per message, the modification fails.",
+              "items": {
+                "$ref": "#/x-body-types/ClassificationLabelValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "addLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of label IDs to add to messages.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ids": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "The IDs of the messages to modify. There is a limit of 1000 ids per request.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removeClassificationLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of Classification Label values to remove from messages.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removeLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of label IDs to remove from messages.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClassificationLabelFieldValue": {
+      "type": "object",
+      "description": "Field values for a classification label.",
+      "properties": {
+        "fieldId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Required. The field ID for the Classification Label Value. Maps to the ID field of the Google Drive `Label.Field` object."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Selection choice ID for the selection option. Should only be set if the field type is `SELECTION` in the Google Drive `Label.Field` object. Maps to the id field of the Google Drive `Label.Field.SelectionOptions` resource."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClassificationLabelValue": {
+      "type": "object",
+      "description": "Classification Labels applied to the email message. Classification Labels are different from Gmail inbox labels. Only used for Google Workspace accounts. [Learn more about classification labels](https://support.google.com/a/answer/9292382).",
+      "properties": {
+        "fields": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Field values for the given classification label ID.",
+              "items": {
+                "$ref": "#/x-body-types/ClassificationLabelFieldValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labelId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Required. The canonical or raw alphanumeric classification label ID. Maps to the ID field of the Google Drive Label resource."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Draft": {
+      "type": "object",
+      "description": "A draft email in the user's mailbox.",
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The immutable ID of the draft.",
+              "x-required-in-methods": [
+                "gmail.users.drafts.send"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "anyOf": [
+            {
+              "description": "The message content of the draft.",
+              "$ref": "#/x-body-types/Message",
+              "x-required-in-methods": [
+                "gmail.users.drafts.create",
+                "gmail.users.drafts.update"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "History": {
+      "type": "object",
+      "description": "A record of a change to the user's mailbox. Each history change may affect multiple messages in multiple ways.",
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uint64",
+              "description": "The mailbox sequence ID."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labelsAdded": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Labels added to messages in this history record.",
+              "items": {
+                "$ref": "#/x-body-types/HistoryLabelAdded"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labelsRemoved": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Labels removed from messages in this history record.",
+              "items": {
+                "$ref": "#/x-body-types/HistoryLabelRemoved"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messages": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of messages changed in this history record. The fields for specific change types, such as `messagesAdded` may duplicate messages in this field. We recommend using the specific change-type fields instead of this.",
+              "items": {
+                "$ref": "#/x-body-types/Message"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messagesAdded": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Messages added to the mailbox in this history record.",
+              "items": {
+                "$ref": "#/x-body-types/HistoryMessageAdded"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messagesDeleted": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Messages deleted (not Trashed) from the mailbox in this history record.",
+              "items": {
+                "$ref": "#/x-body-types/HistoryMessageDeleted"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HistoryLabelAdded": {
+      "type": "object",
+      "properties": {
+        "labelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Label IDs added to the message.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "anyOf": [
+            {
+              "$ref": "#/x-body-types/Message"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HistoryLabelRemoved": {
+      "type": "object",
+      "properties": {
+        "labelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Label IDs removed from the message.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "anyOf": [
+            {
+              "$ref": "#/x-body-types/Message"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HistoryMessageAdded": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "anyOf": [
+            {
+              "$ref": "#/x-body-types/Message"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HistoryMessageDeleted": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "anyOf": [
+            {
+              "$ref": "#/x-body-types/Message"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Label": {
+      "type": "object",
+      "description": "Labels are used to categorize messages and threads within the user's mailbox. The maximum number of labels supported for a user's mailbox is 10,000.",
+      "properties": {
+        "color": {
+          "anyOf": [
+            {
+              "description": "The color to assign to the label. Color is only available for labels that have their `type` set to `user`.",
+              "$ref": "#/x-body-types/LabelColor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The immutable ID of the label.",
+              "x-required-in-methods": [
+                "gmail.users.labels.update"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labelListVisibility": {
+          "anyOf": [
+            {
+              "enum": [
+                "labelShow",
+                "labelShowIfUnread",
+                "labelHide"
+              ],
+              "type": "string",
+              "description": "The visibility of the label in the label list in the Gmail web interface.",
+              "x-required-in-methods": [
+                "gmail.users.labels.create",
+                "gmail.users.labels.update"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messageListVisibility": {
+          "anyOf": [
+            {
+              "enum": [
+                "show",
+                "hide"
+              ],
+              "type": "string",
+              "description": "The visibility of messages with this label in the message list in the Gmail web interface.",
+              "x-required-in-methods": [
+                "gmail.users.labels.create",
+                "gmail.users.labels.update"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messagesTotal": {
+          "anyOf": [
+            {
+              "format": "int32",
+              "type": "integer",
+              "description": "The total number of messages with the label."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messagesUnread": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int32",
+              "description": "The number of unread messages with the label."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The display name of the label.",
+              "x-required-in-methods": [
+                "gmail.users.labels.create",
+                "gmail.users.labels.update"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "threadsTotal": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int32",
+              "description": "The total number of threads with the label."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "threadsUnread": {
+          "anyOf": [
+            {
+              "format": "int32",
+              "type": "integer",
+              "description": "The number of unread threads with the label."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "system",
+                "user"
+              ],
+              "description": "The owner type for the label. User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. System labels are internally created and cannot be added, modified, or deleted. System labels may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the `INBOX` and `UNREAD` labels from messages and threads, but cannot apply or remove the `DRAFTS` or `SENT` labels from messages or threads."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LabelColor": {
+      "type": "object",
+      "properties": {
+        "backgroundColor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The background color represented as hex string #RRGGBB (ex #000000). This field is required in order to set the color of a label. Only the following predefined set of color values are allowed: \\#000000, #434343, #666666, #999999, #cccccc, #efefef, #f3f3f3, #ffffff, \\#fb4c2f, #ffad47, #fad165, #16a766, #43d692, #4a86e8, #a479e2, #f691b3, \\#f6c5be, #ffe6c7, #fef1d1, #b9e4d0, #c6f3de, #c9daf8, #e4d7f5, #fcdee8, \\#efa093, #ffd6a2, #fce8b3, #89d3b2, #a0eac9, #a4c2f4, #d0bcf1, #fbc8d9, \\#e66550, #ffbc6b, #fcda83, #44b984, #68dfa9, #6d9eeb, #b694e8, #f7a7c0, \\#cc3a21, #eaa041, #f2c960, #149e60, #3dc789, #3c78d8, #8e63ce, #e07798, \\#ac2b16, #cf8933, #d5ae49, #0b804b, #2a9c68, #285bac, #653e9b, #b65775, \\#822111, #a46a21, #aa8831, #076239, #1a764d, #1c4587, #41236d, #83334c, \\#464646, #e7e7e7, #0d3472, #b6cff5, #0d3b44, #98d7e4, #3d188e, #e3d7ff, \\#711a36, #fbd3e0, #8a1c0a, #f2b2a8, #7a2e0b, #ffc8af, #7a4706, #ffdeb5, \\#594c05, #fbe983, #684e07, #fdedc1, #0b4f30, #b3efd3, #04502e, #a2dcc1, \\#c2c2c2, #4986e7, #2da2bb, #b99aff, #994a64, #f691b2, #ff7537, #ffad46, \\#662e37, #ebdbde, #cca6ac, #094228, #42d692, #16a765, #757575, #1e53b8, \\#007286, #7858c3, #c2185b, #d93025, #54240e, #633e04, #521d28, #202124, \\#083018"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "textColor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The text color of the label, represented as hex string. This field is required in order to set the color of a label. Only the following predefined set of color values are allowed: \\#000000, #434343, #666666, #999999, #cccccc, #efefef, #f3f3f3, #ffffff, \\#fb4c2f, #ffad47, #fad165, #16a766, #43d692, #4a86e8, #a479e2, #f691b3, \\#f6c5be, #ffe6c7, #fef1d1, #b9e4d0, #c6f3de, #c9daf8, #e4d7f5, #fcdee8, \\#efa093, #ffd6a2, #fce8b3, #89d3b2, #a0eac9, #a4c2f4, #d0bcf1, #fbc8d9, \\#e66550, #ffbc6b, #fcda83, #44b984, #68dfa9, #6d9eeb, #b694e8, #f7a7c0, \\#cc3a21, #eaa041, #f2c960, #149e60, #3dc789, #3c78d8, #8e63ce, #e07798, \\#ac2b16, #cf8933, #d5ae49, #0b804b, #2a9c68, #285bac, #653e9b, #b65775, \\#822111, #a46a21, #aa8831, #076239, #1a764d, #1c4587, #41236d, #83334c, \\#464646, #e7e7e7, #0d3472, #b6cff5, #0d3b44, #98d7e4, #3d188e, #e3d7ff, \\#711a36, #fbd3e0, #8a1c0a, #f2b2a8, #7a2e0b, #ffc8af, #7a4706, #ffdeb5, \\#594c05, #fbe983, #684e07, #fdedc1, #0b4f30, #b3efd3, #04502e, #a2dcc1, \\#c2c2c2, #4986e7, #2da2bb, #b99aff, #994a64, #f691b2, #ff7537, #ffad46, \\#662e37, #ebdbde, #cca6ac, #094228, #42d692, #16a765, #757575, #1e53b8, \\#007286, #7858c3, #c2185b, #d93025, #54240e, #633e04, #521d28, #202124, \\#083018"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListDraftsResponse": {
+      "type": "object",
+      "properties": {
+        "drafts": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of drafts. Note that the `Message` property in each `Draft` resource only contains an `id` and a `threadId`. The [`messages.get`](https://developers.google.com/workspace/gmail/api/v1/reference/users/messages/get) method can fetch additional message details.",
+              "items": {
+                "$ref": "#/x-body-types/Draft"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nextPageToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Token to retrieve the next page of results in the list."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultSizeEstimate": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "uint32",
+              "description": "Estimated total number of results."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "history": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of history records. Any `messages` contained in the response will typically only have `id` and `threadId` fields populated.",
+              "items": {
+                "$ref": "#/x-body-types/History"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "historyId": {
+          "anyOf": [
+            {
+              "format": "uint64",
+              "type": "string",
+              "description": "The ID of the mailbox's current history record."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nextPageToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Page token to retrieve the next page of results in the list."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListLabelsResponse": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of labels. Note that each label resource only contains an `id`, `name`, `messageListVisibility`, `labelListVisibility`, and `type`. The [`labels.get`](https://developers.google.com/workspace/gmail/api/v1/reference/users/labels/get) method can fetch additional label details.",
+              "items": {
+                "$ref": "#/x-body-types/Label"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListMessagesResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of messages. Note that each message resource contains only an `id` and a `threadId`. Additional message details can be fetched using the messages.get method.",
+              "items": {
+                "$ref": "#/x-body-types/Message"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nextPageToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Token to retrieve the next page of results in the list."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultSizeEstimate": {
+          "anyOf": [
+            {
+              "format": "uint32",
+              "type": "integer",
+              "description": "Estimated total number of results."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListThreadsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Page token to retrieve the next page of results in the list."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultSizeEstimate": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "uint32",
+              "description": "Estimated total number of results."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "threads": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of threads. Note that each thread resource does not contain a list of `messages`. The list of `messages` for a given thread can be fetched using the [`threads.get`](https://developers.google.com/workspace/gmail/api/v1/reference/users/threads/get) method.",
+              "items": {
+                "$ref": "#/x-body-types/Thread"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Message": {
+      "type": "object",
+      "description": "An email message.",
+      "properties": {
+        "classificationLabelValues": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "Classification Label values on the message. Available Classification Label schemas can be queried using the Google Drive Labels API. Each classification label ID must be unique. If duplicate IDs are provided, only one will be retained, and the selection is arbitrary. Only used for Google Workspace accounts. There's a limit of 20 Classification Label values per request. If the Classification Label values exceeds the maximum allowed number, the request fails.",
+              "items": {
+                "$ref": "#/x-body-types/ClassificationLabelValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "historyId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uint64",
+              "description": "The ID of the last history record that modified this message."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The immutable ID of the message."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "internalDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "int64",
+              "description": "The internal message creation timestamp (epoch ms), which determines ordering in the inbox. For normal SMTP-received email, this represents the time the message was originally accepted by Google, which is more reliable than the `Date` header. However, for API-migrated mail, it can be configured by client to be based on the `Date` header."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of IDs of labels applied to this message.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload": {
+          "anyOf": [
+            {
+              "description": "The parsed email structure in the message parts.",
+              "$ref": "#/x-body-types/MessagePart"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw": {
+          "anyOf": [
+            {
+              "format": "byte",
+              "type": "string",
+              "description": "The entire email message in an RFC 2822 formatted and base64url encoded string. Returned in `messages.get` and `drafts.get` responses when the `format=RAW` parameter is supplied. @required gmail.users.drafts.create gmail.users.drafts.update",
+              "x-required-in-methods": [
+                "gmail.users.messages.send",
+                "gmail.users.messages.import",
+                "gmail.users.messages.insert",
+                "gmail.users.drafts.create",
+                "gmail.users.drafts.update",
+                "gmail.users.drafts.send"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sizeEstimate": {
+          "anyOf": [
+            {
+              "format": "int32",
+              "type": "integer",
+              "description": "Estimated size in bytes of the message."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snippet": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "A short part of the message text."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "threadId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The ID of the thread the message belongs to. To add a message or draft to a thread, the following criteria must be met: 1. The requested `threadId` must be specified on the `Message` or `Draft.Message` you supply with your request. 2. The `References` and `In-Reply-To` headers must be set in compliance with the [RFC 2822](https://tools.ietf.org/html/rfc2822) standard. 3. The `Subject` headers must match."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessagePart": {
+      "type": "object",
+      "description": "A single MIME message part.",
+      "properties": {
+        "body": {
+          "anyOf": [
+            {
+              "description": "The message part body for this part, which may be empty for container MIME message parts.",
+              "$ref": "#/x-body-types/MessagePartBody"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The filename of the attachment. Only present if this message part represents an attachment."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "headers": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "List of headers on this message part. For the top-level message part, representing the entire message payload, it will contain the standard RFC 2822 email headers such as `To`, `From`, and `Subject`.",
+              "items": {
+                "$ref": "#/x-body-types/MessagePartHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mimeType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The MIME type of the message part."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The immutable ID of the message part."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parts": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "The child MIME message parts of this part. This only applies to container MIME message parts, for example `multipart/*`. For non- container MIME message part types, such as `text/plain`, this field is empty. For more information, see RFC 1521.",
+              "items": {
+                "$ref": "#/x-body-types/MessagePart"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessagePartBody": {
+      "type": "object",
+      "description": "The body of a single MIME message part.",
+      "properties": {
+        "attachmentId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "When present, contains the ID of an external attachment that can be retrieved in a separate `messages.attachments.get` request. When not present, the entire content of the message part body is contained in the data field."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "byte",
+              "description": "The body data of a MIME message part as a base64url encoded string. May be empty for MIME container types that have no message body or when the body data is sent as a separate attachment. An attachment ID is present if the body data is contained in a separate attachment."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "size": {
+          "anyOf": [
+            {
+              "format": "int32",
+              "type": "integer",
+              "description": "Number of bytes for the message part data (encoding notwithstanding)."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessagePartHeader": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The name of the header before the `:` separator. For example, `To`."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The value of the header after the `:` separator. For example, `someuser@example.com`."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ModifyMessageRequest": {
+      "type": "object",
+      "properties": {
+        "addClassificationLabels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of classification label values to add. If a Classification Label with the same label ID is already applied to the message, fields with existing field IDs will be updated and fields with new field IDs will be added. There's a limit of 20 Classification Label values per request. If the message is already classified and the final total number of Classification Label values exceeds the maximum allowed number of Classification Label values per message, the modification fails.",
+              "items": {
+                "$ref": "#/x-body-types/ClassificationLabelValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "addLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of IDs of labels to add to this message. You can add up to 100 labels with each update.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removeClassificationLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of Classification Label values to remove from this message.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removeLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list IDs of labels to remove from this message. You can remove up to 100 labels with each update.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ModifyThreadRequest": {
+      "type": "object",
+      "properties": {
+        "addLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of IDs of labels to add to this thread. You can add up to 100 labels with each update.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "removeLabelIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "A list of IDs of labels to remove from this thread. You can remove up to 100 labels with each update.",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Profile": {
+      "type": "object",
+      "description": "Profile for a Gmail user.",
+      "properties": {
+        "emailAddress": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The user's email address."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "historyId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uint64",
+              "description": "The ID of the mailbox's current history record."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messagesTotal": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int32",
+              "description": "The total number of messages in the mailbox."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "threadsTotal": {
+          "anyOf": [
+            {
+              "format": "int32",
+              "type": "integer",
+              "description": "The total number of threads in the mailbox."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Thread": {
+      "type": "object",
+      "description": "A collection of messages representing a conversation.",
+      "properties": {
+        "historyId": {
+          "anyOf": [
+            {
+              "format": "uint64",
+              "type": "string",
+              "description": "The ID of the last history record that modified this thread."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "The unique ID of the thread."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messages": {
+          "anyOf": [
+            {
+              "type": "array",
+              "description": "The list of messages in the thread.",
+              "items": {
+                "$ref": "#/x-body-types/Message"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snippet": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "A short part of the message text."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "x-cli-types": {
+    "MailComposition": {
+      "type": "object",
+      "description": "CLI-only mail composition inputs. Named composition flags override these values after loading --file. Addresses are bare ASCII mailboxes. Arrays are replaced by explicit options. File paths resolve from the working directory. Sending requires at least one to, cc, or bcc recipient after merging; drafts may be incomplete. An omitted body becomes empty plain text.",
+      "additionalProperties": false,
+      "properties": {
+        "to": {
+          "type": "array",
+          "description": "Recipient email addresses. Repeat --to for multiple recipients.",
+          "x-cli-value-name": "EMAIL",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "cc": {
+          "type": "array",
+          "description": "Cc email addresses. Repeat --cc for multiple recipients.",
+          "x-cli-value-name": "EMAIL",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "bcc": {
+          "type": "array",
+          "description": "Bcc email addresses. Repeat --bcc for multiple recipients.",
+          "x-cli-value-name": "EMAIL",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "from": {
+          "type": "string",
+          "description": "Sender email address; defaults to ACCOUNT. Google must allow this sender.",
+          "x-cli-value-name": "EMAIL",
+          "minLength": 1
+        },
+        "replyTo": {
+          "type": "string",
+          "description": "Reply-To email address.",
+          "x-cli-value-name": "EMAIL",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "description": "Message subject.",
+          "x-cli-value-name": "TEXT"
+        },
+        "text": {
+          "type": "string",
+          "description": "Plain text message body.",
+          "x-cli-value-name": "TEXT"
+        },
+        "html": {
+          "type": "string",
+          "description": "HTML message body; combines with text as multipart/alternative.",
+          "x-cli-value-name": "HTML"
+        },
+        "textFile": {
+          "type": "string",
+          "description": "Read the plain text body from a UTF-8 file.",
+          "x-cli-value-name": "PATH",
+          "minLength": 1
+        },
+        "htmlFile": {
+          "type": "string",
+          "description": "Read the HTML body from a UTF-8 file.",
+          "x-cli-value-name": "PATH",
+          "minLength": 1
+        },
+        "attachments": {
+          "type": "array",
+          "description": "Attach local files as application/octet-stream. Repeat --attach for multiple files.",
+          "x-cli-value-name": "PATH",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "x-cli-option": "attach"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "text",
+              "textFile"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "html",
+              "htmlFile"
+            ]
+          }
+        }
+      ],
+      "x-exclusive-fields": [
+        [
+          "text",
+          "textFile"
+        ],
+        [
+          "html",
+          "htmlFile"
+        ]
+      ]
+    }
+  },
+  "x-google-methods": {
+    "gmail.users.drafts.create": {
+      "id": "gmail.users.drafts.create",
+      "path": "gmail/v1/users/{userId}/drafts",
+      "httpMethod": "POST",
+      "description": "Creates a draft with the `DRAFT` label. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "userId": {
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "default": "me",
+          "location": "path",
+          "type": "string"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.drafts",
+        "https://www.googleapis.com/auth/gmail.drafts.create",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Draft"
+      },
+      "response": {
+        "$ref": "Draft"
+      },
+      "mediaUpload": {
+        "maxSize": "36700160",
+        "accept": [
+          "message/*"
+        ],
+        "protocols": {
+          "simple": {
+            "path": "/upload/gmail/v1/users/{userId}/drafts",
+            "multipart": true
+          },
+          "resumable": {
+            "path": "/resumable/upload/gmail/v1/users/{userId}/drafts",
+            "multipart": true
+          }
+        }
+      }
+    },
+    "gmail.users.drafts.delete": {
+      "id": "gmail.users.drafts.delete",
+      "path": "gmail/v1/users/{userId}/drafts/{id}",
+      "httpMethod": "DELETE",
+      "description": "Immediately and permanently deletes the specified draft. Does not simply trash it. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "id": {
+          "description": "The ID of the draft to delete.",
+          "type": "string",
+          "location": "path",
+          "required": true
+        },
+        "userId": {
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "default": "me",
+          "type": "string"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.drafts",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ]
+    },
+    "gmail.users.drafts.get": {
+      "id": "gmail.users.drafts.get",
+      "path": "gmail/v1/users/{userId}/drafts/{id}",
+      "httpMethod": "GET",
+      "description": "Gets the specified draft. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "format": {
+          "enumDescriptions": [
+            "Returns only email message ID and labels; does not return the email headers, body, or payload.",
+            "Returns the full email message data with body content parsed in the `payload` field; the `raw` field is not used. Format cannot be used when accessing the api using the gmail.metadata scope.",
+            "Returns the full email message data with body content in the `raw` field as a base64url encoded string; the `payload` field is not used. Format cannot be used when accessing the api using the gmail.metadata scope.",
+            "Returns only email message ID, labels, and email headers."
+          ],
+          "location": "query",
+          "enum": [
+            "minimal",
+            "full",
+            "raw",
+            "metadata"
+          ],
+          "type": "string",
+          "default": "full",
+          "description": "The format to return the draft in."
+        },
+        "id": {
+          "description": "The ID of the draft to retrieve.",
+          "type": "string",
+          "location": "path",
+          "required": true
+        },
+        "userId": {
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "location": "path",
+          "type": "string"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.drafts",
+        "https://www.googleapis.com/auth/gmail.drafts.readonly",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "Draft"
+      }
+    },
+    "gmail.users.drafts.list": {
+      "id": "gmail.users.drafts.list",
+      "path": "gmail/v1/users/{userId}/drafts",
+      "httpMethod": "GET",
+      "description": "Lists the drafts in the user's mailbox. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "includeSpamTrash": {
+          "default": "false",
+          "type": "boolean",
+          "description": "Include drafts from `SPAM` and `TRASH` in the results.",
+          "location": "query"
+        },
+        "pageToken": {
+          "description": "Page token to retrieve a specific page of results in the list.",
+          "location": "query",
+          "type": "string"
+        },
+        "q": {
+          "location": "query",
+          "description": "Only return draft messages matching the specified query. Supports the same query format as the Gmail search box. For example, `\"from:someuser@example.com rfc822msgid: is:unread\"`.",
+          "type": "string"
+        },
+        "userId": {
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "type": "string",
+          "default": "me",
+          "required": true
+        },
+        "maxResults": {
+          "format": "uint32",
+          "default": "100",
+          "location": "query",
+          "description": "Maximum number of drafts to return. This field defaults to 100. The maximum allowed value for this field is 500.",
+          "type": "integer"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.drafts",
+        "https://www.googleapis.com/auth/gmail.drafts.readonly",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "ListDraftsResponse"
+      }
+    },
+    "gmail.users.drafts.send": {
+      "id": "gmail.users.drafts.send",
+      "path": "gmail/v1/users/{userId}/drafts/send",
+      "httpMethod": "POST",
+      "description": "Sends the specified, existing draft to the recipients in the `To`, `Cc`, and `Bcc` headers. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "default": "me",
+          "required": true,
+          "type": "string",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Draft"
+      },
+      "response": {
+        "$ref": "Message"
+      },
+      "mediaUpload": {
+        "protocols": {
+          "resumable": {
+            "multipart": true,
+            "path": "/resumable/upload/gmail/v1/users/{userId}/drafts/send"
+          },
+          "simple": {
+            "path": "/upload/gmail/v1/users/{userId}/drafts/send",
+            "multipart": true
+          }
+        },
+        "maxSize": "36700160",
+        "accept": [
+          "message/*"
+        ]
+      }
+    },
+    "gmail.users.drafts.update": {
+      "id": "gmail.users.drafts.update",
+      "path": "gmail/v1/users/{userId}/drafts/{id}",
+      "httpMethod": "PUT",
+      "description": "Replaces a draft's content. For more information, see [Create and send draft emails](https://developers.google.com/workspace/gmail/api/guides/drafts).",
+      "parameters": {
+        "id": {
+          "required": true,
+          "location": "path",
+          "description": "The ID of the draft to update.",
+          "type": "string"
+        },
+        "userId": {
+          "default": "me",
+          "location": "path",
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.drafts",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Draft"
+      },
+      "response": {
+        "$ref": "Draft"
+      },
+      "mediaUpload": {
+        "protocols": {
+          "resumable": {
+            "path": "/resumable/upload/gmail/v1/users/{userId}/drafts/{id}",
+            "multipart": true
+          },
+          "simple": {
+            "path": "/upload/gmail/v1/users/{userId}/drafts/{id}",
+            "multipart": true
+          }
+        },
+        "accept": [
+          "message/*"
+        ],
+        "maxSize": "36700160"
+      }
+    },
+    "gmail.users.getProfile": {
+      "id": "gmail.users.getProfile",
+      "path": "gmail/v1/users/{userId}/profile",
+      "httpMethod": "GET",
+      "description": "Gets the current user's Gmail profile.",
+      "parameters": {
+        "userId": {
+          "location": "path",
+          "type": "string",
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "Profile"
+      }
+    },
+    "gmail.users.history.list": {
+      "id": "gmail.users.history.list",
+      "path": "gmail/v1/users/{userId}/history",
+      "httpMethod": "GET",
+      "description": "Lists the history of all changes to the given mailbox. History results are returned in chronological order (increasing `historyId`). For more information, see [Synchronize clients with Gmail](https://developers.google.com/workspace/gmail/api/guides/sync).",
+      "parameters": {
+        "maxResults": {
+          "type": "integer",
+          "description": "Maximum number of history records to return. This field defaults to 100. The maximum allowed value for this field is 500.",
+          "format": "uint32",
+          "default": "100",
+          "location": "query"
+        },
+        "startHistoryId": {
+          "type": "string",
+          "description": "Required. Returns history records after the specified `startHistoryId`. The supplied `startHistoryId` should be obtained from the `historyId` of a message, thread, or previous `list` response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date `startHistoryId` typically returns an `HTTP 404` error code. A `historyId` is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an `HTTP 404` error response, your application should perform a full sync. If you receive no `nextPageToken` in the response, there are no updates to retrieve and you can store the returned `historyId` for a future request.",
+          "format": "uint64",
+          "location": "query"
+        },
+        "pageToken": {
+          "location": "query",
+          "type": "string",
+          "description": "Page token to retrieve a specific page of results in the list."
+        },
+        "labelId": {
+          "description": "Only return messages with a label matching the ID.",
+          "location": "query",
+          "type": "string"
+        },
+        "historyTypes": {
+          "type": "string",
+          "enum": [
+            "messageAdded",
+            "messageDeleted",
+            "labelAdded",
+            "labelRemoved"
+          ],
+          "description": "History types to be returned by the function",
+          "location": "query",
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "repeated": true
+        },
+        "userId": {
+          "default": "me",
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "type": "string",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "ListHistoryResponse"
+      }
+    },
+    "gmail.users.labels.create": {
+      "id": "gmail.users.labels.create",
+      "path": "gmail/v1/users/{userId}/labels",
+      "httpMethod": "POST",
+      "description": "Creates a label. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "userId": {
+          "required": true,
+          "location": "path",
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "default": "me"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.labels.create",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Label"
+      },
+      "response": {
+        "$ref": "Label"
+      }
+    },
+    "gmail.users.labels.delete": {
+      "id": "gmail.users.labels.delete",
+      "path": "gmail/v1/users/{userId}/labels/{id}",
+      "httpMethod": "DELETE",
+      "description": "Immediately and permanently deletes the specified label and removes it from any messages and threads that it's applied to. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "id": {
+          "required": true,
+          "location": "path",
+          "description": "The ID of the label to delete.",
+          "type": "string"
+        },
+        "userId": {
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "type": "string",
+          "default": "me",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ]
+    },
+    "gmail.users.labels.get": {
+      "id": "gmail.users.labels.get",
+      "path": "gmail/v1/users/{userId}/labels/{id}",
+      "httpMethod": "GET",
+      "description": "Gets the specified label. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "id": {
+          "required": true,
+          "description": "The ID of the label to retrieve.",
+          "type": "string",
+          "location": "path"
+        },
+        "userId": {
+          "location": "path",
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "default": "me"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.labels.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "Label"
+      }
+    },
+    "gmail.users.labels.list": {
+      "id": "gmail.users.labels.list",
+      "path": "gmail/v1/users/{userId}/labels",
+      "httpMethod": "GET",
+      "description": "Lists all labels in the user's mailbox. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "userId": {
+          "required": true,
+          "type": "string",
+          "default": "me",
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.labels.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "ListLabelsResponse"
+      }
+    },
+    "gmail.users.labels.patch": {
+      "id": "gmail.users.labels.patch",
+      "path": "gmail/v1/users/{userId}/labels/{id}",
+      "httpMethod": "PATCH",
+      "description": "Patch the specified label. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "userId": {
+          "type": "string",
+          "location": "path",
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true
+        },
+        "id": {
+          "required": true,
+          "type": "string",
+          "location": "path",
+          "description": "The ID of the label to update."
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Label"
+      },
+      "response": {
+        "$ref": "Label"
+      }
+    },
+    "gmail.users.labels.update": {
+      "id": "gmail.users.labels.update",
+      "path": "gmail/v1/users/{userId}/labels/{id}",
+      "httpMethod": "PUT",
+      "description": "Updates the specified label. For more information, see [Manage labels](https://developers.google.com/workspace/gmail/api/guides/labels).",
+      "parameters": {
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "location": "path",
+          "default": "me",
+          "required": true,
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the label to update.",
+          "location": "path",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Label"
+      },
+      "response": {
+        "$ref": "Label"
+      }
+    },
+    "gmail.users.messages.attachments.get": {
+      "id": "gmail.users.messages.attachments.get",
+      "path": "gmail/v1/users/{userId}/messages/{messageId}/attachments/{id}",
+      "httpMethod": "GET",
+      "description": "Gets the specified message attachment.",
+      "parameters": {
+        "id": {
+          "location": "path",
+          "type": "string",
+          "description": "The ID of the attachment.",
+          "required": true
+        },
+        "messageId": {
+          "type": "string",
+          "description": "The ID of the message containing the attachment.",
+          "location": "path",
+          "required": true
+        },
+        "userId": {
+          "default": "me",
+          "required": true,
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.action",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "MessagePartBody"
+      }
+    },
+    "gmail.users.messages.batchDelete": {
+      "id": "gmail.users.messages.batchDelete",
+      "path": "gmail/v1/users/{userId}/messages/batchDelete",
+      "httpMethod": "POST",
+      "description": "Deletes many messages by message ID. Provides no guarantees that messages were not already deleted or even existed at all.",
+      "parameters": {
+        "userId": {
+          "location": "path",
+          "type": "string",
+          "default": "me",
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete"
+      ],
+      "request": {
+        "$ref": "BatchDeleteMessagesRequest"
+      }
+    },
+    "gmail.users.messages.batchModify": {
+      "id": "gmail.users.messages.batchModify",
+      "path": "gmail/v1/users/{userId}/messages/batchModify",
+      "httpMethod": "POST",
+      "description": "Modifies the labels and the Classification Label values on the specified messages. For administrators modifying messages for users in their organization, requests require authorization with a [service account](https://developers.google.com/identity/protocols/OAuth2ServiceAccount) that has [domain-wide delegation authority](https://developers.google.com/identity/protocols/OAuth2ServiceAccount#delegatingauthority) to impersonate users with the `https://www.googleapis.com/auth/gmail.modify.restricted` scope.",
+      "parameters": {
+        "userId": {
+          "type": "string",
+          "default": "me",
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.messages.modify",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "BatchModifyMessagesRequest"
+      }
+    },
+    "gmail.users.messages.delete": {
+      "id": "gmail.users.messages.delete",
+      "path": "gmail/v1/users/{userId}/messages/{id}",
+      "httpMethod": "DELETE",
+      "description": "Immediately and permanently deletes the specified message. This operation cannot be undone. Prefer `messages.trash` instead.",
+      "parameters": {
+        "id": {
+          "description": "The ID of the message to delete.",
+          "required": true,
+          "type": "string",
+          "location": "path"
+        },
+        "userId": {
+          "type": "string",
+          "location": "path",
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete"
+      ]
+    },
+    "gmail.users.messages.get": {
+      "id": "gmail.users.messages.get",
+      "path": "gmail/v1/users/{userId}/messages/{id}",
+      "httpMethod": "GET",
+      "description": "Gets the specified message.",
+      "parameters": {
+        "format": {
+          "type": "string",
+          "default": "full",
+          "enumDescriptions": [
+            "Returns only email message ID and labels; does not return the email headers, body, or payload.",
+            "Returns the full email message data with body content parsed in the `payload` field; the `raw` field is not used. Format cannot be used when accessing the api using the gmail.metadata scope.",
+            "Returns the full email message data with body content in the `raw` field as a base64url encoded string; the `payload` field is not used. Format cannot be used when accessing the api using the gmail.metadata scope.",
+            "Returns only email message ID, labels, and email headers."
+          ],
+          "enum": [
+            "minimal",
+            "full",
+            "raw",
+            "metadata"
+          ],
+          "location": "query",
+          "description": "The format to return the message in."
+        },
+        "id": {
+          "description": "The ID of the message to retrieve. This ID is usually retrieved using `messages.list`. The ID is also contained in the result when a message is inserted (`messages.insert`) or imported (`messages.import`).",
+          "type": "string",
+          "location": "path",
+          "required": true
+        },
+        "userId": {
+          "location": "path",
+          "default": "me",
+          "type": "string",
+          "required": true,
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        },
+        "metadataHeaders": {
+          "repeated": true,
+          "description": "When given and format is `METADATA`, only include headers specified.",
+          "type": "string",
+          "location": "query"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.action",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.metadata",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "Message"
+      }
+    },
+    "gmail.users.messages.import": {
+      "id": "gmail.users.messages.import",
+      "path": "gmail/v1/users/{userId}/messages/import",
+      "httpMethod": "POST",
+      "description": "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. This method doesn't perform SPF checks, so it might not work for some spam messages, such as those attempting to perform domain spoofing. This method does not send a message. Note that the maximum size of the message is 150 MB.",
+      "parameters": {
+        "internalDateSource": {
+          "enumDescriptions": [
+            "Internal message date set to current time when received by Gmail.",
+            "Internal message time based on 'Date' header in email, when valid."
+          ],
+          "description": "Source for Gmail's internal date of the message.",
+          "default": "dateHeader",
+          "type": "string",
+          "location": "query",
+          "enum": [
+            "receivedTime",
+            "dateHeader"
+          ]
+        },
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "location": "path",
+          "default": "me",
+          "type": "string"
+        },
+        "processForCalendar": {
+          "location": "query",
+          "type": "boolean",
+          "default": "false",
+          "description": "Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user."
+        },
+        "neverMarkSpam": {
+          "location": "query",
+          "description": "Ignore the Gmail spam classifier decision and never mark this email as SPAM in the mailbox.",
+          "default": "false",
+          "type": "boolean"
+        },
+        "deleted": {
+          "default": "false",
+          "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
+          "location": "query",
+          "type": "boolean"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.insert",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Message"
+      },
+      "response": {
+        "$ref": "Message"
+      },
+      "mediaUpload": {
+        "protocols": {
+          "resumable": {
+            "path": "/resumable/upload/gmail/v1/users/{userId}/messages/import",
+            "multipart": true
+          },
+          "simple": {
+            "path": "/upload/gmail/v1/users/{userId}/messages/import",
+            "multipart": true
+          }
+        },
+        "accept": [
+          "message/*"
+        ],
+        "maxSize": "157286400"
+      }
+    },
+    "gmail.users.messages.insert": {
+      "id": "gmail.users.messages.insert",
+      "path": "gmail/v1/users/{userId}/messages",
+      "httpMethod": "POST",
+      "description": "Directly inserts a message into only this user's mailbox similar to `IMAP APPEND`, bypassing most scanning and classification. Does not send a message. For more information, see [Create and send email messages](https://developers.google.com/workspace/gmail/api/guides/sending).",
+      "parameters": {
+        "userId": {
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "default": "me",
+          "required": true,
+          "location": "path"
+        },
+        "internalDateSource": {
+          "enumDescriptions": [
+            "Internal message date set to current time when received by Gmail.",
+            "Internal message time based on 'Date' header in email, when valid."
+          ],
+          "type": "string",
+          "location": "query",
+          "enum": [
+            "receivedTime",
+            "dateHeader"
+          ],
+          "default": "receivedTime",
+          "description": "Source for Gmail's internal date of the message."
+        },
+        "deleted": {
+          "default": "false",
+          "location": "query",
+          "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
+          "type": "boolean"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.insert",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "Message"
+      },
+      "response": {
+        "$ref": "Message"
+      },
+      "mediaUpload": {
+        "maxSize": "157286400",
+        "accept": [
+          "message/*"
+        ],
+        "protocols": {
+          "resumable": {
+            "path": "/resumable/upload/gmail/v1/users/{userId}/messages",
+            "multipart": true
+          },
+          "simple": {
+            "path": "/upload/gmail/v1/users/{userId}/messages",
+            "multipart": true
+          }
+        }
+      }
+    },
+    "gmail.users.messages.list": {
+      "id": "gmail.users.messages.list",
+      "path": "gmail/v1/users/{userId}/messages",
+      "httpMethod": "GET",
+      "description": "Lists the messages in the user's mailbox. For more information, see [List Gmail messages](https://developers.google.com/workspace/gmail/api/guides/list-messages).",
+      "parameters": {
+        "pageToken": {
+          "location": "query",
+          "description": "Page token to retrieve a specific page of results in the list.",
+          "type": "string"
+        },
+        "includeSpamTrash": {
+          "default": "false",
+          "type": "boolean",
+          "location": "query",
+          "description": "Include messages from `SPAM` and `TRASH` in the results."
+        },
+        "userId": {
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "type": "string",
+          "default": "me"
+        },
+        "labelIds": {
+          "repeated": true,
+          "location": "query",
+          "description": "Only return messages with labels that match all of the specified label IDs. Messages in a thread might have labels that other messages in the same thread don't have. To learn more, see [Manage labels on messages and threads](https://developers.google.com/workspace/gmail/api/guides/labels#manage_labels_on_messages_threads).",
+          "type": "string"
+        },
+        "maxResults": {
+          "location": "query",
+          "default": "100",
+          "description": "Maximum number of messages to return. This field defaults to 100. The maximum allowed value for this field is 500.",
+          "type": "integer",
+          "format": "uint32"
+        },
+        "q": {
+          "description": "Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, `\"from:someuser@example.com rfc822msgid: is:unread\"`. Parameter cannot be used when accessing the api using the gmail.metadata scope.",
+          "location": "query",
+          "type": "string"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "ListMessagesResponse"
+      }
+    },
+    "gmail.users.messages.modify": {
+      "id": "gmail.users.messages.modify",
+      "path": "gmail/v1/users/{userId}/messages/{id}/modify",
+      "httpMethod": "POST",
+      "description": "Modifies the labels and the Classification Label values on the specified message. For administrators modifying message for users in their organization, requests require authorization with a [service account](https://developers.google.com/identity/protocols/OAuth2ServiceAccount) that has [domain-wide delegation authority](https://developers.google.com/identity/protocols/OAuth2ServiceAccount#delegatingauthority) to impersonate users with the `https://www.googleapis.com/auth/gmail.modify.restricted` scope.",
+      "parameters": {
+        "userId": {
+          "default": "me",
+          "location": "path",
+          "required": true,
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        },
+        "id": {
+          "type": "string",
+          "location": "path",
+          "description": "The ID of the message to modify.",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.messages.modify",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "ModifyMessageRequest"
+      },
+      "response": {
+        "$ref": "Message"
+      }
+    },
+    "gmail.users.messages.send": {
+      "id": "gmail.users.messages.send",
+      "path": "gmail/v1/users/{userId}/messages/send",
+      "httpMethod": "POST",
+      "description": "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers. For more information, see [Create and send email messages](https://developers.google.com/workspace/gmail/api/guides/sending).",
+      "parameters": {
+        "userId": {
+          "type": "string",
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.send",
+        "https://www.googleapis.com/auth/gmail.send.self"
+      ],
+      "request": {
+        "$ref": "Message"
+      },
+      "response": {
+        "$ref": "Message"
+      },
+      "mediaUpload": {
+        "maxSize": "36700160",
+        "protocols": {
+          "resumable": {
+            "path": "/resumable/upload/gmail/v1/users/{userId}/messages/send",
+            "multipart": true
+          },
+          "simple": {
+            "multipart": true,
+            "path": "/upload/gmail/v1/users/{userId}/messages/send"
+          }
+        },
+        "accept": [
+          "message/*"
+        ]
+      }
+    },
+    "gmail.users.messages.trash": {
+      "id": "gmail.users.messages.trash",
+      "path": "gmail/v1/users/{userId}/messages/{id}/trash",
+      "httpMethod": "POST",
+      "description": "Moves the specified message to the trash.",
+      "parameters": {
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "location": "path",
+          "default": "me",
+          "required": true,
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "The ID of the message to Trash.",
+          "location": "path"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "response": {
+        "$ref": "Message"
+      }
+    },
+    "gmail.users.messages.untrash": {
+      "id": "gmail.users.messages.untrash",
+      "path": "gmail/v1/users/{userId}/messages/{id}/untrash",
+      "httpMethod": "POST",
+      "description": "Removes the specified message from the trash.",
+      "parameters": {
+        "userId": {
+          "default": "me",
+          "type": "string",
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true
+        },
+        "id": {
+          "required": true,
+          "location": "path",
+          "description": "The ID of the message to remove from Trash.",
+          "type": "string"
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "response": {
+        "$ref": "Message"
+      }
+    },
+    "gmail.users.threads.delete": {
+      "id": "gmail.users.threads.delete",
+      "path": "gmail/v1/users/{userId}/threads/{id}",
+      "httpMethod": "DELETE",
+      "description": "Immediately and permanently deletes the specified thread. Any messages that belong to the thread are also deleted. This operation cannot be undone. Prefer `threads.trash` instead. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "id": {
+          "description": "ID of the Thread to delete.",
+          "required": true,
+          "location": "path",
+          "type": "string"
+        },
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "location": "path",
+          "default": "me",
+          "type": "string",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete"
+      ]
+    },
+    "gmail.users.threads.get": {
+      "id": "gmail.users.threads.get",
+      "path": "gmail/v1/users/{userId}/threads/{id}",
+      "httpMethod": "GET",
+      "description": "Gets the specified thread. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "metadataHeaders": {
+          "location": "query",
+          "type": "string",
+          "repeated": true,
+          "description": "When given and format is METADATA, only include headers specified."
+        },
+        "userId": {
+          "required": true,
+          "type": "string",
+          "default": "me",
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        },
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "The ID of the thread to retrieve.",
+          "location": "path"
+        },
+        "format": {
+          "default": "full",
+          "type": "string",
+          "enumDescriptions": [
+            "Returns the full email message data with body content parsed in the `payload` field; the `raw` field is not used. Format cannot be used when accessing the api using the gmail.metadata scope.",
+            "Returns only email message IDs, labels, and email headers.",
+            "Returns only email message IDs and labels; does not return the email headers, body, or payload."
+          ],
+          "enum": [
+            "full",
+            "metadata",
+            "minimal"
+          ],
+          "location": "query",
+          "description": "The format to return the messages in."
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.action",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.metadata",
+        "https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "Thread"
+      }
+    },
+    "gmail.users.threads.list": {
+      "id": "gmail.users.threads.list",
+      "path": "gmail/v1/users/{userId}/threads",
+      "httpMethod": "GET",
+      "description": "Lists the threads in the user's mailbox. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "pageToken": {
+          "type": "string",
+          "location": "query",
+          "description": "Page token to retrieve a specific page of results in the list."
+        },
+        "userId": {
+          "location": "path",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "type": "string",
+          "required": true,
+          "default": "me"
+        },
+        "q": {
+          "description": "Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, `\"from:someuser@example.com rfc822msgid: is:unread\"`. Parameter cannot be used when accessing the api using the gmail.metadata scope.",
+          "type": "string",
+          "location": "query"
+        },
+        "includeSpamTrash": {
+          "type": "boolean",
+          "location": "query",
+          "default": "false",
+          "description": "Include threads from `SPAM` and `TRASH` in the results."
+        },
+        "maxResults": {
+          "description": "Maximum number of threads to return. This field defaults to 100. The maximum allowed value for this field is 500.",
+          "default": "100",
+          "location": "query",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "labelIds": {
+          "repeated": true,
+          "location": "query",
+          "type": "string",
+          "description": "Only return threads with labels that match all of the specified label IDs."
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "response": {
+        "$ref": "ListThreadsResponse"
+      }
+    },
+    "gmail.users.threads.modify": {
+      "id": "gmail.users.threads.modify",
+      "path": "gmail/v1/users/{userId}/threads/{id}/modify",
+      "httpMethod": "POST",
+      "description": "Modifies the labels applied to the thread. This applies to all messages in the thread. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "userId": {
+          "default": "me",
+          "location": "path",
+          "required": true,
+          "type": "string",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        },
+        "id": {
+          "description": "The ID of the thread to modify.",
+          "location": "path",
+          "type": "string",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.messages.modify",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "request": {
+        "$ref": "ModifyThreadRequest"
+      },
+      "response": {
+        "$ref": "Thread"
+      }
+    },
+    "gmail.users.threads.trash": {
+      "id": "gmail.users.threads.trash",
+      "path": "gmail/v1/users/{userId}/threads/{id}/trash",
+      "httpMethod": "POST",
+      "description": "Moves the specified thread to the trash. Any messages that belong to the thread are also moved to the trash. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "userId": {
+          "type": "string",
+          "location": "path",
+          "required": true,
+          "default": "me",
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user."
+        },
+        "id": {
+          "description": "The ID of the thread to Trash.",
+          "location": "path",
+          "type": "string",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "response": {
+        "$ref": "Thread"
+      }
+    },
+    "gmail.users.threads.untrash": {
+      "id": "gmail.users.threads.untrash",
+      "path": "gmail/v1/users/{userId}/threads/{id}/untrash",
+      "httpMethod": "POST",
+      "description": "Removes the specified thread from the trash. Any messages that belong to the thread are also removed from the trash. For more information, see [Manage threads](https://developers.google.com/workspace/gmail/api/guides/threads).",
+      "parameters": {
+        "userId": {
+          "description": "The user's email address. The special value `me` can be used to indicate the authenticated user.",
+          "required": true,
+          "location": "path",
+          "type": "string",
+          "default": "me"
+        },
+        "id": {
+          "description": "The ID of the thread to remove from Trash.",
+          "location": "path",
+          "type": "string",
+          "required": true
+        }
+      },
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.messages",
+        "https://www.googleapis.com/auth/gmail.messages.delete",
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "response": {
+        "$ref": "Thread"
+      }
+    }
+  }
+}

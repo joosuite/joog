@@ -1,0 +1,8 @@
+/target/
+/bin/
+.env
+.env.*
+client_secret*.json
+credentials*.json
+tokens*.json
+.DS_Store

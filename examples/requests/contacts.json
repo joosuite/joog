@@ -1,0 +1,5 @@
+{
+  "resourceName": "people/me",
+  "personFields": "names,emailAddresses",
+  "max": 10
+}

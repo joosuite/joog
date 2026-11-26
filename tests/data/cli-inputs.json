@@ -1,0 +1,294 @@
+[
+  {
+    "service": "mail",
+    "command": "messages.send",
+    "file": {
+      "to": [
+        "alice@example.com"
+      ],
+      "cc": [
+        "bob@example.com"
+      ],
+      "bcc": [
+        "archive@example.com"
+      ],
+      "subject": "Report",
+      "text": "Hello"
+    },
+    "cli": [
+      "--to",
+      "alice@example.com",
+      "--cc",
+      "bob@example.com",
+      "--bcc",
+      "archive@example.com",
+      "--subject",
+      "Report",
+      "--text",
+      "Hello"
+    ],
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "files.create",
+    "file": {
+      "name": "Report",
+      "parents": [
+        "folder"
+      ]
+    },
+    "cli": [
+      "--name",
+      "Report",
+      "--parents",
+      "folder"
+    ],
+    "body": {
+      "name": "Report",
+      "parents": [
+        "folder"
+      ]
+    }
+  },
+  {
+    "service": "calendar",
+    "command": "events.insert",
+    "file": {
+      "summary": "Planning",
+      "startTime": "2026-12-01T10:00:00+01:00",
+      "endTime": "2026-12-01T11:00:00+01:00",
+      "attendees": [
+        {
+          "email": "alice@example.com"
+        }
+      ]
+    },
+    "cli": [
+      "--summary",
+      "Planning",
+      "--start-time",
+      "2026-12-01T10:00:00+01:00",
+      "--end-time",
+      "2026-12-01T11:00:00+01:00",
+      "--attendees",
+      "[{\"email\":\"alice@example.com\"}]"
+    ],
+    "body": {
+      "summary": "Planning",
+      "start": {
+        "dateTime": "2026-12-01T10:00:00+01:00"
+      },
+      "end": {
+        "dateTime": "2026-12-01T11:00:00+01:00"
+      },
+      "attendees": [
+        {
+          "email": "alice@example.com"
+        }
+      ]
+    }
+  },
+  {
+    "service": "sheets",
+    "command": "create",
+    "file": {
+      "title": "Ledger",
+      "propertiesLocale": "en_US"
+    },
+    "cli": [
+      "--title",
+      "Ledger",
+      "--properties-locale",
+      "en_US"
+    ],
+    "body": {
+      "properties": {
+        "title": "Ledger",
+        "locale": "en_US"
+      }
+    }
+  },
+  {
+    "service": "docs",
+    "command": "insert-text",
+    "file": {
+      "documentId": "doc",
+      "text": "Hello",
+      "index": 1,
+      "writeControl": {
+        "requiredRevisionId": "revision"
+      }
+    },
+    "cli": [
+      "--document-id",
+      "doc",
+      "--text",
+      "Hello",
+      "--index",
+      "1",
+      "--write-control",
+      "{\"requiredRevisionId\":\"revision\"}"
+    ],
+    "body": {
+      "requests": [
+        {
+          "insertText": {
+            "text": "Hello",
+            "location": {
+              "index": 1
+            }
+          }
+        }
+      ],
+      "writeControl": {
+        "requiredRevisionId": "revision"
+      }
+    }
+  },
+  {
+    "service": "slides",
+    "command": "create-slide",
+    "file": {
+      "presentationId": "deck",
+      "objectId": "slide",
+      "layout": "TITLE_AND_BODY"
+    },
+    "cli": [
+      "--presentation-id",
+      "deck",
+      "--object-id",
+      "slide",
+      "--layout",
+      "TITLE_AND_BODY"
+    ],
+    "body": {
+      "requests": [
+        {
+          "createSlide": {
+            "objectId": "slide",
+            "slideLayoutReference": {
+              "predefinedLayout": "TITLE_AND_BODY"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "service": "forms",
+    "command": "create",
+    "file": {
+      "title": "Feedback"
+    },
+    "cli": [
+      "--title",
+      "Feedback"
+    ],
+    "body": {
+      "info": {
+        "title": "Feedback"
+      }
+    }
+  },
+  {
+    "service": "tasks",
+    "command": "tasks.insert",
+    "file": {
+      "title": "Report",
+      "notes": "Draft it",
+      "due": "2026-12-01T00:00:00Z"
+    },
+    "cli": [
+      "--title",
+      "Report",
+      "--notes",
+      "Draft it",
+      "--due",
+      "2026-12-01T00:00:00Z"
+    ],
+    "body": {
+      "title": "Report",
+      "notes": "Draft it",
+      "due": "2026-12-01T00:00:00Z"
+    }
+  },
+  {
+    "service": "contacts",
+    "command": "people.create-contact",
+    "file": {
+      "names": [
+        {
+          "givenName": "Alice",
+          "familyName": "Martin"
+        }
+      ],
+      "emailAddresses": [
+        {
+          "value": "alice@example.com"
+        }
+      ]
+    },
+    "cli": [
+      "--names",
+      "[{\"givenName\":\"Alice\",\"familyName\":\"Martin\"}]",
+      "--email-addresses",
+      "[{\"value\":\"alice@example.com\"}]"
+    ],
+    "body": {
+      "names": [
+        {
+          "givenName": "Alice",
+          "familyName": "Martin"
+        }
+      ],
+      "emailAddresses": [
+        {
+          "value": "alice@example.com"
+        }
+      ]
+    }
+  },
+  {
+    "service": "youtube",
+    "command": "playlists.insert",
+    "file": {
+      "title": "Tutorials",
+      "description": "Examples",
+      "privacy": "unlisted"
+    },
+    "cli": [
+      "--title",
+      "Tutorials",
+      "--description",
+      "Examples",
+      "--privacy",
+      "unlisted"
+    ],
+    "body": {
+      "snippet": {
+        "title": "Tutorials",
+        "description": "Examples"
+      },
+      "status": {
+        "privacyStatus": "unlisted"
+      }
+    }
+  },
+  {
+    "service": "photos",
+    "command": "albums.create",
+    "file": {
+      "title": "Trips"
+    },
+    "cli": [
+      "--title",
+      "Trips"
+    ],
+    "body": {
+      "album": {
+        "title": "Trips"
+      }
+    }
+  }
+]

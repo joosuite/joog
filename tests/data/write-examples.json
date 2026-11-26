@@ -1,0 +1,13 @@
+{
+  "mail": "messages.modify",
+  "drive": "permissions.create",
+  "calendar": "events.insert",
+  "sheets": "values.update",
+  "docs": "batch-update",
+  "slides": "batch-update",
+  "forms": "batch-update",
+  "tasks": "tasks.insert",
+  "contacts": "people.create-contact",
+  "youtube": "playlists.insert",
+  "photos": "albums.create"
+}

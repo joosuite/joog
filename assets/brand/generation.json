@@ -1,0 +1,17 @@
+{
+  "generator": "Built-in image_gen tool",
+  "assets": [
+    {
+      "file": "logo.png",
+      "reference": "Original logo proposal sheet, bottom-left: 03 / Twin O",
+      "transparentBackground": true,
+      "prompt": "Extract ONLY the approved full lowercase wordmark 'joog' from the BOTTOM LEFT quadrant labelled '03 / TWIN O' in the reference design sheet. Deliver a single isolated production logo on a genuinely transparent background, tightly cropped with a modest clear margin, wide horizontal composition. Preserve the exact approved lettering and proportions: a lowercase j with circular dot and curved descender, the two circular lowercase o letters joined in the middle with the thin horizontal negative-space bridge, and the rounded lowercase g with its descender. The name must read exactly j o o g, 'joog'. Preserve this selected concept faithfully; do not redesign it or substitute a font. Render all lettering in one uniform flat cobalt blue #3154ae, with crisp smooth edges and true transparency in all counters. Remove the board, labels, grid lines, miniatures, heading, and every other logo. No tile, no tagline, no shadow, no gradient, no added icon. This is the final approved wordmark asset for a software README and sign-in page."
+    },
+    {
+      "file": "icon.png",
+      "reference": "Second icon proposal sheet, bottom-middle: 05 / JG",
+      "transparentBackground": true,
+      "prompt": "Extract ONLY the approved large icon in the BOTTOM MIDDLE cell labelled '05 / JG' from the reference sheet. Deliver ONE isolated production icon on a genuinely transparent square canvas, preserving the exact approved angular lowercase j and g monogram, proportions, square j dot, rectangular g counter, 45-degree clipped j hook, and descending g return. This must faithfully match the reference's 05 / JG, not 02 / J Cut and not any of the double-o icons. Render in one uniform flat cobalt blue #3154ae with crisp vector-like edges, no gradients, no texture, no shadow. Use comfortable even clear space, icon fills roughly 78 percent of the square. Remove the board, labels, grid lines, miniatures, title, and all other icons. No enclosing tile, no additional wordmark, no new design. The transparent negative-space counter must stay clean and open. This approved standalone mark will be used as the favicon and project icon for Joog."
+    }
+  ]
+}

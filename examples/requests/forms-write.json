@@ -1,0 +1,21 @@
+{
+  "formId": "FORM_ID",
+  "requests": [
+    {
+      "createItem": {
+        "item": {
+          "title": "Your name",
+          "questionItem": {
+            "question": {
+              "required": true,
+              "textQuestion": {}
+            }
+          }
+        },
+        "location": {
+          "index": 0
+        }
+      }
+    }
+  ]
+}

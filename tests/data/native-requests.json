@@ -1,0 +1,2430 @@
+{
+  "mail": {
+    "name": "gmail",
+    "version": "v1",
+    "rootUrl": "https://gmail.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "fields": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "default": "true",
+        "location": "query",
+        "type": "boolean"
+      },
+      "quotaUser": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "default": "json",
+        "location": "query",
+        "type": "string"
+      },
+      "oauth_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "enum": [
+          "1",
+          "2"
+        ],
+        "type": "string",
+        "location": "query"
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "upload_protocol": {
+        "location": "query",
+        "type": "string"
+      }
+    },
+    "methods": {
+      "read": {
+        "id": "gmail.users.messages.modify",
+        "path": "gmail/v1/users/{userId}/messages/{id}/modify",
+        "httpMethod": "POST",
+        "parameters": {
+          "userId": {
+            "default": "me",
+            "location": "path",
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "required": true,
+            "location": "path",
+            "type": "string"
+          }
+        },
+        "request": {
+          "$ref": "ModifyMessageRequest"
+        },
+        "response": {
+          "$ref": "Message"
+        },
+        "scopes": [
+          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.messages",
+          "https://www.googleapis.com/auth/gmail.messages.delete",
+          "https://www.googleapis.com/auth/gmail.messages.modify",
+          "https://www.googleapis.com/auth/gmail.modify"
+        ]
+      },
+      "unread": {
+        "id": "gmail.users.messages.modify",
+        "path": "gmail/v1/users/{userId}/messages/{id}/modify",
+        "httpMethod": "POST",
+        "parameters": {
+          "userId": {
+            "default": "me",
+            "location": "path",
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "required": true,
+            "location": "path",
+            "type": "string"
+          }
+        },
+        "request": {
+          "$ref": "ModifyMessageRequest"
+        },
+        "response": {
+          "$ref": "Message"
+        },
+        "scopes": [
+          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.messages",
+          "https://www.googleapis.com/auth/gmail.messages.delete",
+          "https://www.googleapis.com/auth/gmail.messages.modify",
+          "https://www.googleapis.com/auth/gmail.modify"
+        ]
+      },
+      "star": {
+        "id": "gmail.users.messages.modify",
+        "path": "gmail/v1/users/{userId}/messages/{id}/modify",
+        "httpMethod": "POST",
+        "parameters": {
+          "userId": {
+            "default": "me",
+            "location": "path",
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "required": true,
+            "location": "path",
+            "type": "string"
+          }
+        },
+        "request": {
+          "$ref": "ModifyMessageRequest"
+        },
+        "response": {
+          "$ref": "Message"
+        },
+        "scopes": [
+          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.messages",
+          "https://www.googleapis.com/auth/gmail.messages.delete",
+          "https://www.googleapis.com/auth/gmail.messages.modify",
+          "https://www.googleapis.com/auth/gmail.modify"
+        ]
+      },
+      "unstar": {
+        "id": "gmail.users.messages.modify",
+        "path": "gmail/v1/users/{userId}/messages/{id}/modify",
+        "httpMethod": "POST",
+        "parameters": {
+          "userId": {
+            "default": "me",
+            "location": "path",
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "required": true,
+            "location": "path",
+            "type": "string"
+          }
+        },
+        "request": {
+          "$ref": "ModifyMessageRequest"
+        },
+        "response": {
+          "$ref": "Message"
+        },
+        "scopes": [
+          "https://mail.google.com/",
+          "https://www.googleapis.com/auth/gmail.messages",
+          "https://www.googleapis.com/auth/gmail.messages.delete",
+          "https://www.googleapis.com/auth/gmail.messages.modify",
+          "https://www.googleapis.com/auth/gmail.modify"
+        ]
+      }
+    },
+    "schemas": {
+      "ClassificationLabelFieldValue": {
+        "properties": {
+          "selection": {
+            "type": "string"
+          },
+          "fieldId": {
+            "type": "string"
+          }
+        },
+        "id": "ClassificationLabelFieldValue",
+        "type": "object"
+      },
+      "ClassificationLabelValue": {
+        "id": "ClassificationLabelValue",
+        "properties": {
+          "labelId": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "ClassificationLabelFieldValue"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "Message": {
+        "properties": {
+          "classificationLabelValues": {
+            "type": "array",
+            "items": {
+              "$ref": "ClassificationLabelValue"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "labelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "sizeEstimate": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "payload": {
+            "$ref": "MessagePart"
+          },
+          "internalDate": {
+            "type": "string",
+            "format": "int64"
+          },
+          "snippet": {
+            "type": "string"
+          },
+          "historyId": {
+            "format": "uint64",
+            "type": "string"
+          },
+          "raw": {
+            "format": "byte",
+            "type": "string"
+          },
+          "threadId": {
+            "type": "string"
+          }
+        },
+        "id": "Message",
+        "type": "object"
+      },
+      "MessagePart": {
+        "id": "MessagePart",
+        "properties": {
+          "headers": {
+            "type": "array",
+            "items": {
+              "$ref": "MessagePartHeader"
+            }
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "parts": {
+            "items": {
+              "$ref": "MessagePart"
+            },
+            "type": "array"
+          },
+          "body": {
+            "$ref": "MessagePartBody"
+          },
+          "partId": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "MessagePartBody": {
+        "id": "MessagePartBody",
+        "properties": {
+          "attachmentId": {
+            "type": "string"
+          },
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "data": {
+            "format": "byte",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "MessagePartHeader": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "id": "MessagePartHeader"
+      },
+      "ModifyMessageRequest": {
+        "type": "object",
+        "properties": {
+          "addClassificationLabels": {
+            "items": {
+              "$ref": "ClassificationLabelValue"
+            },
+            "type": "array"
+          },
+          "addLabelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "removeLabelIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "removeClassificationLabelIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "id": "ModifyMessageRequest"
+      }
+    },
+    "x-expected-methods": {
+      "read": "users.messages.modify",
+      "unread": "users.messages.modify",
+      "star": "users.messages.modify",
+      "unstar": "users.messages.modify"
+    }
+  },
+  "drive": {
+    "name": "drive",
+    "version": "v3",
+    "rootUrl": "https://www.googleapis.com/",
+    "servicePath": "drive/v3/",
+    "parameters": {
+      "fields": {
+        "type": "string",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "enum": [
+          "1",
+          "2"
+        ],
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "location": "query",
+        "type": "boolean",
+        "default": "true"
+      },
+      "access_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "upload_protocol": {
+        "location": "query",
+        "type": "string"
+      },
+      "uploadType": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "type": "string",
+        "default": "json",
+        "location": "query"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      }
+    },
+    "methods": {
+      "search": {
+        "id": "drive.files.list",
+        "path": "files",
+        "httpMethod": "GET",
+        "parameters": {
+          "corpora": {
+            "type": "string",
+            "location": "query"
+          },
+          "includePermissionsForView": {
+            "type": "string",
+            "location": "query"
+          },
+          "supportsTeamDrives": {
+            "deprecated": true,
+            "location": "query",
+            "default": "false",
+            "type": "boolean"
+          },
+          "orderBy": {
+            "type": "string",
+            "location": "query"
+          },
+          "includeTeamDriveItems": {
+            "deprecated": true,
+            "type": "boolean",
+            "default": "false",
+            "location": "query"
+          },
+          "spaces": {
+            "default": "drive",
+            "type": "string",
+            "location": "query"
+          },
+          "driveId": {
+            "type": "string",
+            "location": "query"
+          },
+          "includeLabels": {
+            "type": "string",
+            "location": "query"
+          },
+          "teamDriveId": {
+            "type": "string",
+            "deprecated": true,
+            "location": "query"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": "1",
+            "location": "query",
+            "maximum": "1000",
+            "default": "100"
+          },
+          "q": {
+            "location": "query",
+            "type": "string"
+          },
+          "corpus": {
+            "type": "string",
+            "enum": [
+              "domain",
+              "user"
+            ],
+            "location": "query",
+            "deprecated": true
+          },
+          "includeItemsFromAllDrives": {
+            "location": "query",
+            "type": "boolean",
+            "default": "false"
+          },
+          "pageToken": {
+            "location": "query",
+            "type": "string"
+          },
+          "supportsAllDrives": {
+            "default": "false",
+            "location": "query",
+            "type": "boolean"
+          }
+        },
+        "response": {
+          "$ref": "FileList"
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/drive",
+          "https://www.googleapis.com/auth/drive.appdata",
+          "https://www.googleapis.com/auth/drive.file",
+          "https://www.googleapis.com/auth/drive.meet.readonly",
+          "https://www.googleapis.com/auth/drive.metadata",
+          "https://www.googleapis.com/auth/drive.metadata.readonly",
+          "https://www.googleapis.com/auth/drive.photos.readonly",
+          "https://www.googleapis.com/auth/drive.readonly"
+        ]
+      },
+      "restore": {
+        "id": "drive.files.update",
+        "path": "files/{fileId}",
+        "httpMethod": "PATCH",
+        "parameters": {
+          "fileId": {
+            "location": "path",
+            "type": "string",
+            "required": true
+          },
+          "includeLabels": {
+            "type": "string",
+            "location": "query"
+          },
+          "includePermissionsForView": {
+            "location": "query",
+            "type": "string"
+          },
+          "removeParents": {
+            "location": "query",
+            "type": "string"
+          },
+          "useContentAsIndexableText": {
+            "default": "false",
+            "type": "boolean",
+            "location": "query"
+          },
+          "addParents": {
+            "type": "string",
+            "location": "query"
+          },
+          "ocrLanguage": {
+            "type": "string",
+            "location": "query"
+          },
+          "enforceSingleParent": {
+            "deprecated": true,
+            "type": "boolean",
+            "default": "false",
+            "location": "query"
+          },
+          "supportsAllDrives": {
+            "type": "boolean",
+            "location": "query",
+            "default": "false"
+          },
+          "keepRevisionForever": {
+            "type": "boolean",
+            "default": "false",
+            "location": "query"
+          },
+          "supportsTeamDrives": {
+            "default": "false",
+            "type": "boolean",
+            "location": "query",
+            "deprecated": true
+          }
+        },
+        "request": {
+          "$ref": "File"
+        },
+        "response": {
+          "$ref": "File"
+        },
+        "mediaUpload": {
+          "accept": [
+            "*/*"
+          ],
+          "maxSize": "5497558138880",
+          "protocols": {
+            "simple": {
+              "path": "/upload/drive/v3/files/{fileId}",
+              "multipart": true
+            },
+            "resumable": {
+              "multipart": true,
+              "path": "/resumable/upload/drive/v3/files/{fileId}"
+            }
+          }
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/drive",
+          "https://www.googleapis.com/auth/drive.appdata",
+          "https://www.googleapis.com/auth/drive.file",
+          "https://www.googleapis.com/auth/drive.metadata",
+          "https://www.googleapis.com/auth/drive.scripts"
+        ]
+      }
+    },
+    "schemas": {
+      "ClientEncryptionDetails": {
+        "id": "ClientEncryptionDetails",
+        "properties": {
+          "encryptionState": {
+            "type": "string"
+          },
+          "decryptionMetadata": {
+            "$ref": "DecryptionMetadata"
+          }
+        },
+        "type": "object"
+      },
+      "ContentRestriction": {
+        "type": "object",
+        "id": "ContentRestriction",
+        "properties": {
+          "restrictionTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ownerRestricted": {
+            "type": "boolean"
+          },
+          "systemRestricted": {
+            "type": "boolean"
+          },
+          "restrictingUser": {
+            "$ref": "User"
+          },
+          "readOnly": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "DecryptionMetadata": {
+        "properties": {
+          "keyFormat": {
+            "type": "string"
+          },
+          "wrappedKey": {
+            "type": "string"
+          },
+          "kaclsName": {
+            "type": "string"
+          },
+          "kaclsId": {
+            "type": "string",
+            "format": "int64"
+          },
+          "jwt": {
+            "type": "string"
+          },
+          "aes256GcmChunkSize": {
+            "type": "string"
+          },
+          "encryptionResourceKeyHash": {
+            "type": "string"
+          }
+        },
+        "id": "DecryptionMetadata",
+        "type": "object"
+      },
+      "DownloadRestriction": {
+        "type": "object",
+        "properties": {
+          "restrictedForWriters": {
+            "type": "boolean"
+          },
+          "restrictedForReaders": {
+            "type": "boolean"
+          }
+        },
+        "id": "DownloadRestriction"
+      },
+      "DownloadRestrictionsMetadata": {
+        "properties": {
+          "effectiveDownloadRestrictionWithContext": {
+            "$ref": "DownloadRestriction"
+          },
+          "itemDownloadRestriction": {
+            "$ref": "DownloadRestriction"
+          }
+        },
+        "type": "object",
+        "id": "DownloadRestrictionsMetadata"
+      },
+      "File": {
+        "type": "object",
+        "properties": {
+          "isAppAuthorized": {
+            "type": "boolean"
+          },
+          "webViewLink": {
+            "type": "string"
+          },
+          "exportLinks": {
+            "readOnly": true,
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "sha1Checksum": {
+            "type": "string"
+          },
+          "clientEncryptionDetails": {
+            "$ref": "ClientEncryptionDetails"
+          },
+          "kind": {
+            "type": "string",
+            "default": "drive#file"
+          },
+          "linkShareMetadata": {
+            "type": "object",
+            "properties": {
+              "securityUpdateEnabled": {
+                "type": "boolean"
+              },
+              "securityUpdateEligible": {
+                "type": "boolean"
+              }
+            }
+          },
+          "capabilities": {
+            "properties": {
+              "canAcceptOwnership": {
+                "type": "boolean"
+              },
+              "canChangeViewersCanCopyContent": {
+                "type": "boolean",
+                "deprecated": true
+              },
+              "canModifyOwnerContentRestriction": {
+                "type": "boolean"
+              },
+              "canMoveItemOutOfTeamDrive": {
+                "deprecated": true,
+                "type": "boolean"
+              },
+              "canModifyLabels": {
+                "type": "boolean"
+              },
+              "canDelete": {
+                "type": "boolean"
+              },
+              "canModifyContentRestriction": {
+                "type": "boolean",
+                "deprecated": true
+              },
+              "canRename": {
+                "type": "boolean"
+              },
+              "canAddFolderFromAnotherDrive": {
+                "type": "boolean"
+              },
+              "canChangeItemDownloadRestriction": {
+                "type": "boolean"
+              },
+              "canTrash": {
+                "type": "boolean"
+              },
+              "canCopy": {
+                "type": "boolean"
+              },
+              "canAccessViaGenAi": {
+                "type": "boolean"
+              },
+              "canReadTeamDrive": {
+                "type": "boolean",
+                "deprecated": true
+              },
+              "canReadDrive": {
+                "type": "boolean"
+              },
+              "canRemoveContentRestriction": {
+                "type": "boolean"
+              },
+              "canChangeCopyRequiresWriterPermission": {
+                "type": "boolean"
+              },
+              "canMoveItemOutOfDrive": {
+                "type": "boolean"
+              },
+              "canChangeSecurityUpdateEnabled": {
+                "type": "boolean"
+              },
+              "canAddChildren": {
+                "type": "boolean"
+              },
+              "canReadLabels": {
+                "type": "boolean"
+              },
+              "canMoveChildrenWithinDrive": {
+                "type": "boolean"
+              },
+              "canDownload": {
+                "type": "boolean"
+              },
+              "canModifyContent": {
+                "type": "boolean"
+              },
+              "canShare": {
+                "type": "boolean"
+              },
+              "canReadRevisions": {
+                "type": "boolean"
+              },
+              "canMoveItemWithinDrive": {
+                "type": "boolean"
+              },
+              "canMoveChildrenOutOfTeamDrive": {
+                "deprecated": true,
+                "type": "boolean"
+              },
+              "canModifyEditorContentRestriction": {
+                "type": "boolean"
+              },
+              "canRemoveChildren": {
+                "type": "boolean"
+              },
+              "canComment": {
+                "type": "boolean"
+              },
+              "canStartApproval": {
+                "type": "boolean"
+              },
+              "canDeleteChildren": {
+                "type": "boolean"
+              },
+              "canMoveItemIntoTeamDrive": {
+                "type": "boolean",
+                "deprecated": true
+              },
+              "canMoveItemWithinTeamDrive": {
+                "deprecated": true,
+                "type": "boolean"
+              },
+              "canMoveChildrenOutOfDrive": {
+                "type": "boolean"
+              },
+              "canDisableInheritedPermissions": {
+                "type": "boolean"
+              },
+              "canUntrash": {
+                "type": "boolean"
+              },
+              "canTrashChildren": {
+                "type": "boolean"
+              },
+              "canRemoveMyDriveParent": {
+                "type": "boolean"
+              },
+              "canEnableInheritedPermissions": {
+                "type": "boolean"
+              },
+              "canAddMyDriveParent": {
+                "type": "boolean"
+              },
+              "canListChildren": {
+                "type": "boolean"
+              },
+              "canEdit": {
+                "type": "boolean"
+              },
+              "canMoveTeamDriveItem": {
+                "deprecated": true,
+                "type": "boolean"
+              },
+              "canMoveChildrenWithinTeamDrive": {
+                "type": "boolean",
+                "deprecated": true
+              }
+            },
+            "type": "object"
+          },
+          "modifiedByMeTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "thumbnailLink": {
+            "type": "string"
+          },
+          "owners": {
+            "type": "array",
+            "items": {
+              "$ref": "User"
+            }
+          },
+          "hasThumbnail": {
+            "type": "boolean"
+          },
+          "viewedByMeTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "viewedByMe": {
+            "type": "boolean"
+          },
+          "contentRestrictions": {
+            "type": "array",
+            "items": {
+              "$ref": "ContentRestriction"
+            }
+          },
+          "shortcutDetails": {
+            "properties": {
+              "targetId": {
+                "type": "string"
+              },
+              "targetMimeType": {
+                "type": "string"
+              },
+              "targetResourceKey": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "sharingUser": {
+            "$ref": "User"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sharedWithMeTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trashed": {
+            "type": "boolean"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "headRevisionId": {
+            "type": "string"
+          },
+          "modifiedByMe": {
+            "type": "boolean"
+          },
+          "appProperties": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "fileExtension": {
+            "type": "string"
+          },
+          "thumbnailVersion": {
+            "format": "int64",
+            "type": "string"
+          },
+          "explicitlyTrashed": {
+            "type": "boolean"
+          },
+          "shared": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string",
+            "format": "int64"
+          },
+          "lastModifyingUser": {
+            "$ref": "User"
+          },
+          "copyRequiresWriterPermission": {
+            "type": "boolean"
+          },
+          "viewersCanCopyContent": {
+            "type": "boolean",
+            "deprecated": true
+          },
+          "starred": {
+            "type": "boolean"
+          },
+          "permissionIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "fullFileExtension": {
+            "type": "string"
+          },
+          "spaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "webContentLink": {
+            "type": "string"
+          },
+          "trashingUser": {
+            "$ref": "User"
+          },
+          "folderColorRgb": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "Permission"
+            }
+          },
+          "ownedByMe": {
+            "type": "boolean"
+          },
+          "contentHints": {
+            "properties": {
+              "thumbnail": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  }
+                }
+              },
+              "indexableText": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "trashedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "inheritedPermissionsDisabled": {
+            "type": "boolean"
+          },
+          "downloadRestrictions": {
+            "$ref": "DownloadRestrictionsMetadata"
+          },
+          "originalFilename": {
+            "type": "string"
+          },
+          "imageMediaMetadata": {
+            "type": "object",
+            "properties": {
+              "subjectDistance": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "lens": {
+                "type": "string"
+              },
+              "focalLength": {
+                "type": "number",
+                "format": "float"
+              },
+              "whiteBalance": {
+                "type": "string"
+              },
+              "time": {
+                "type": "string"
+              },
+              "sensor": {
+                "type": "string"
+              },
+              "isoSpeed": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "height": {
+                "format": "int32",
+                "type": "integer"
+              },
+              "location": {
+                "type": "object",
+                "properties": {
+                  "altitude": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              },
+              "rotation": {
+                "format": "int32",
+                "type": "integer"
+              },
+              "cameraModel": {
+                "type": "string"
+              },
+              "exposureBias": {
+                "type": "number",
+                "format": "float"
+              },
+              "exposureMode": {
+                "type": "string"
+              },
+              "width": {
+                "format": "int32",
+                "type": "integer"
+              },
+              "cameraMake": {
+                "type": "string"
+              },
+              "meteringMode": {
+                "type": "string"
+              },
+              "flashUsed": {
+                "type": "boolean"
+              },
+              "colorSpace": {
+                "type": "string"
+              },
+              "maxApertureValue": {
+                "type": "number",
+                "format": "float"
+              },
+              "aperture": {
+                "format": "float",
+                "type": "number"
+              },
+              "exposureTime": {
+                "format": "float",
+                "type": "number"
+              }
+            }
+          },
+          "videoMediaMetadata": {
+            "type": "object",
+            "properties": {
+              "width": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "durationMillis": {
+                "type": "string",
+                "format": "int64"
+              },
+              "height": {
+                "format": "int32",
+                "type": "integer"
+              }
+            }
+          },
+          "modifiedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "md5Checksum": {
+            "type": "string"
+          },
+          "resourceKey": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string",
+            "format": "int64"
+          },
+          "hasAugmentedPermissions": {
+            "type": "boolean"
+          },
+          "quotaBytesUsed": {
+            "type": "string",
+            "format": "int64"
+          },
+          "teamDriveId": {
+            "type": "string",
+            "deprecated": true
+          },
+          "sha256Checksum": {
+            "type": "string"
+          },
+          "driveId": {
+            "type": "string"
+          },
+          "labelInfo": {
+            "type": "object",
+            "properties": {
+              "labels": {
+                "items": {
+                  "$ref": "Label"
+                },
+                "type": "array"
+              }
+            }
+          },
+          "writersCanShare": {
+            "type": "boolean"
+          }
+        },
+        "id": "File"
+      },
+      "Label": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "revisionId": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "LabelField"
+            }
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "id": "Label"
+      },
+      "LabelField": {
+        "type": "object",
+        "properties": {
+          "valueType": {
+            "type": "string"
+          },
+          "text": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "kind": {
+            "type": "string"
+          },
+          "selection": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "integer": {
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "User"
+            }
+          },
+          "dateString": {
+            "items": {
+              "format": "date",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "id": "LabelField"
+      },
+      "Permission": {
+        "id": "Permission",
+        "type": "object",
+        "properties": {
+          "teamDrivePermissionDetails": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "inherited": {
+                  "deprecated": true,
+                  "type": "boolean"
+                },
+                "role": {
+                  "type": "string",
+                  "deprecated": true
+                },
+                "teamDrivePermissionType": {
+                  "deprecated": true,
+                  "type": "string"
+                },
+                "inheritedFrom": {
+                  "deprecated": true,
+                  "type": "string"
+                }
+              }
+            },
+            "readOnly": true,
+            "deprecated": true
+          },
+          "photoLink": {
+            "type": "string"
+          },
+          "allowFileDiscovery": {
+            "type": "boolean"
+          },
+          "pendingOwner": {
+            "type": "boolean"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "inheritedPermissionsDisabled": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "string"
+          },
+          "emailAddress": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "domain": {
+            "type": "string",
+            "readOnly": true
+          },
+          "id": {
+            "type": "string"
+          },
+          "expirationTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "kind": {
+            "default": "drive#permission",
+            "type": "string"
+          },
+          "view": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "permissionDetails": {
+            "items": {
+              "properties": {
+                "permissionType": {
+                  "type": "string"
+                },
+                "inheritedFrom": {
+                  "type": "string",
+                  "readOnly": true
+                },
+                "role": {
+                  "type": "string"
+                },
+                "inherited": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "readOnly": true
+          }
+        }
+      },
+      "User": {
+        "properties": {
+          "me": {
+            "readOnly": true,
+            "type": "boolean"
+          },
+          "emailAddress": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "default": "drive#user",
+            "readOnly": true
+          },
+          "photoLink": {
+            "type": "string",
+            "readOnly": true
+          },
+          "permissionId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "displayName": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "id": "User"
+      }
+    },
+    "x-expected-methods": {
+      "search": "files.list",
+      "restore": "files.update"
+    }
+  },
+  "calendar": {
+    "name": "calendar",
+    "version": "v3",
+    "rootUrl": "https://www.googleapis.com/",
+    "servicePath": "calendar/v3/",
+    "parameters": {
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "userIp": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "location": "query",
+        "default": "true",
+        "type": "boolean"
+      },
+      "alt": {
+        "default": "json",
+        "enum": [
+          "json"
+        ],
+        "location": "query",
+        "type": "string"
+      },
+      "quotaUser": {
+        "location": "query",
+        "type": "string"
+      },
+      "fields": {
+        "location": "query",
+        "type": "string"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      }
+    },
+    "methods": {
+      "events": {
+        "id": "calendar.events.list",
+        "path": "calendars/{calendarId}/events",
+        "httpMethod": "GET",
+        "parameters": {
+          "maxAttendees": {
+            "format": "int32",
+            "location": "query",
+            "minimum": "1",
+            "type": "integer"
+          },
+          "calendarId": {
+            "type": "string",
+            "required": true,
+            "location": "path"
+          },
+          "privateExtendedProperty": {
+            "repeated": true,
+            "location": "query",
+            "type": "string"
+          },
+          "showDeleted": {
+            "location": "query",
+            "type": "boolean"
+          },
+          "timeZone": {
+            "location": "query",
+            "type": "string"
+          },
+          "timeMin": {
+            "format": "date-time",
+            "type": "string",
+            "location": "query"
+          },
+          "alwaysIncludeEmail": {
+            "type": "boolean",
+            "location": "query"
+          },
+          "updatedMin": {
+            "format": "date-time",
+            "type": "string",
+            "location": "query"
+          },
+          "pageToken": {
+            "location": "query",
+            "type": "string"
+          },
+          "showHiddenInvitations": {
+            "location": "query",
+            "type": "boolean"
+          },
+          "orderBy": {
+            "enum": [
+              "startTime",
+              "updated"
+            ],
+            "type": "string",
+            "location": "query"
+          },
+          "eventTypes": {
+            "repeated": true,
+            "enum": [
+              "birthday",
+              "default",
+              "focusTime",
+              "fromGmail",
+              "outOfOffice",
+              "workingLocation"
+            ],
+            "type": "string",
+            "location": "query"
+          },
+          "singleEvents": {
+            "location": "query",
+            "type": "boolean"
+          },
+          "syncToken": {
+            "type": "string",
+            "location": "query"
+          },
+          "q": {
+            "location": "query",
+            "type": "string"
+          },
+          "timeMax": {
+            "format": "date-time",
+            "type": "string",
+            "location": "query"
+          },
+          "maxResults": {
+            "minimum": "1",
+            "default": "250",
+            "type": "integer",
+            "location": "query",
+            "format": "int32"
+          },
+          "sharedExtendedProperty": {
+            "repeated": true,
+            "location": "query",
+            "type": "string"
+          },
+          "iCalUID": {
+            "location": "query",
+            "type": "string"
+          }
+        },
+        "response": {
+          "$ref": "Events"
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/calendar",
+          "https://www.googleapis.com/auth/calendar.app.created",
+          "https://www.googleapis.com/auth/calendar.events",
+          "https://www.googleapis.com/auth/calendar.events.freebusy",
+          "https://www.googleapis.com/auth/calendar.events.owned",
+          "https://www.googleapis.com/auth/calendar.events.owned.readonly",
+          "https://www.googleapis.com/auth/calendar.events.public.readonly",
+          "https://www.googleapis.com/auth/calendar.events.readonly",
+          "https://www.googleapis.com/auth/calendar.readonly"
+        ]
+      }
+    },
+    "schemas": {},
+    "x-expected-methods": {
+      "events": "events.list"
+    }
+  },
+  "sheets": {
+    "name": "sheets",
+    "version": "v4",
+    "rootUrl": "https://sheets.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "prettyPrint": {
+        "type": "boolean",
+        "default": "true",
+        "location": "query"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "upload_protocol": {
+        "type": "string",
+        "location": "query"
+      },
+      "access_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "fields": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "default": "json",
+        "location": "query",
+        "type": "string",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ]
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "location": "query",
+        "type": "string",
+        "enum": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  },
+  "docs": {
+    "name": "docs",
+    "version": "v1",
+    "rootUrl": "https://docs.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "upload_protocol": {
+        "location": "query",
+        "type": "string"
+      },
+      "fields": {
+        "type": "string",
+        "location": "query"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "uploadType": {
+        "location": "query",
+        "type": "string"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "$.xgafv": {
+        "location": "query",
+        "type": "string",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "alt": {
+        "type": "string",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "location": "query",
+        "default": "json"
+      },
+      "oauth_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "prettyPrint": {
+        "default": "true",
+        "location": "query",
+        "type": "boolean"
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  },
+  "slides": {
+    "name": "slides",
+    "version": "v1",
+    "rootUrl": "https://slides.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "fields": {
+        "location": "query",
+        "type": "string"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "upload_protocol": {
+        "location": "query",
+        "type": "string"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "prettyPrint": {
+        "location": "query",
+        "type": "boolean",
+        "default": "true"
+      },
+      "$.xgafv": {
+        "type": "string",
+        "location": "query",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "uploadType": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "type": "string",
+        "default": "json",
+        "location": "query",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ]
+      },
+      "quotaUser": {
+        "location": "query",
+        "type": "string"
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  },
+  "forms": {
+    "name": "forms",
+    "version": "v1",
+    "rootUrl": "https://forms.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "upload_protocol": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "type": "boolean",
+        "location": "query",
+        "default": "true"
+      },
+      "oauth_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "type": "string",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "default": "json",
+        "location": "query"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "uploadType": {
+        "location": "query",
+        "type": "string"
+      },
+      "$.xgafv": {
+        "location": "query",
+        "type": "string",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
+      "fields": {
+        "location": "query",
+        "type": "string"
+      }
+    },
+    "methods": {
+      "responses": {
+        "id": "forms.forms.responses.list",
+        "path": "v1/forms/{formId}/responses",
+        "httpMethod": "GET",
+        "parameters": {
+          "pageSize": {
+            "location": "query",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pageToken": {
+            "type": "string",
+            "location": "query"
+          },
+          "formId": {
+            "location": "path",
+            "required": true,
+            "type": "string"
+          },
+          "filter": {
+            "type": "string",
+            "location": "query"
+          }
+        },
+        "response": {
+          "$ref": "ListFormResponsesResponse"
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/drive",
+          "https://www.googleapis.com/auth/drive.file",
+          "https://www.googleapis.com/auth/forms.responses.readonly"
+        ]
+      },
+      "response": {
+        "id": "forms.forms.responses.get",
+        "path": "v1/forms/{formId}/responses/{responseId}",
+        "httpMethod": "GET",
+        "parameters": {
+          "responseId": {
+            "location": "path",
+            "required": true,
+            "type": "string"
+          },
+          "formId": {
+            "location": "path",
+            "required": true,
+            "type": "string"
+          }
+        },
+        "response": {
+          "$ref": "FormResponse"
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/drive",
+          "https://www.googleapis.com/auth/drive.file",
+          "https://www.googleapis.com/auth/forms.responses.readonly"
+        ]
+      }
+    },
+    "schemas": {},
+    "x-expected-methods": {
+      "responses": "forms.responses.list",
+      "response": "forms.responses.get"
+    }
+  },
+  "tasks": {
+    "name": "tasks",
+    "version": "v1",
+    "rootUrl": "https://tasks.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "prettyPrint": {
+        "type": "boolean",
+        "default": "true",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "type": "string",
+        "location": "query",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
+      "access_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "alt": {
+        "location": "query",
+        "type": "string",
+        "default": "json",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ]
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "quotaUser": {
+        "location": "query",
+        "type": "string"
+      },
+      "oauth_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "callback": {
+        "location": "query",
+        "type": "string"
+      },
+      "upload_protocol": {
+        "type": "string",
+        "location": "query"
+      },
+      "fields": {
+        "type": "string",
+        "location": "query"
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  },
+  "contacts": {
+    "name": "people",
+    "version": "v1",
+    "rootUrl": "https://people.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "default": "true",
+        "type": "boolean",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "location": "query",
+        "type": "string",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
+      "alt": {
+        "type": "string",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "default": "json",
+        "location": "query"
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "key": {
+        "location": "query",
+        "type": "string"
+      },
+      "fields": {
+        "location": "query",
+        "type": "string"
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "upload_protocol": {
+        "type": "string",
+        "location": "query"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  },
+  "youtube": {
+    "name": "youtube",
+    "version": "v3",
+    "rootUrl": "https://youtube.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "key": {
+        "type": "string",
+        "location": "query"
+      },
+      "access_token": {
+        "type": "string",
+        "location": "query"
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "type": "boolean",
+        "default": "true",
+        "location": "query"
+      },
+      "fields": {
+        "location": "query",
+        "type": "string"
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "enum": [
+          "1",
+          "2"
+        ],
+        "location": "query",
+        "type": "string"
+      },
+      "upload_protocol": {
+        "type": "string",
+        "location": "query"
+      },
+      "alt": {
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "location": "query",
+        "type": "string",
+        "default": "json"
+      }
+    },
+    "methods": {
+      "search": {
+        "id": "youtube.search.list",
+        "path": "youtube/v3/search",
+        "httpMethod": "GET",
+        "parameters": {
+          "videoDefinition": {
+            "location": "query",
+            "type": "string",
+            "enum": [
+              "any",
+              "standard",
+              "high"
+            ]
+          },
+          "videoType": {
+            "location": "query",
+            "enum": [
+              "videoTypeUnspecified",
+              "any",
+              "movie",
+              "episode"
+            ],
+            "type": "string"
+          },
+          "videoDuration": {
+            "location": "query",
+            "type": "string",
+            "enum": [
+              "videoDurationUnspecified",
+              "any",
+              "short",
+              "medium",
+              "long"
+            ]
+          },
+          "topicId": {
+            "location": "query",
+            "type": "string"
+          },
+          "forContentOwner": {
+            "type": "boolean",
+            "location": "query"
+          },
+          "videoDimension": {
+            "enum": [
+              "any",
+              "2d",
+              "3d"
+            ],
+            "location": "query",
+            "type": "string"
+          },
+          "onBehalfOfContentOwner": {
+            "location": "query",
+            "type": "string"
+          },
+          "forDeveloper": {
+            "type": "boolean",
+            "location": "query"
+          },
+          "publishedAfter": {
+            "format": "google-datetime",
+            "type": "string",
+            "location": "query"
+          },
+          "channelType": {
+            "enum": [
+              "channelTypeUnspecified",
+              "any",
+              "show"
+            ],
+            "location": "query",
+            "type": "string"
+          },
+          "safeSearch": {
+            "type": "string",
+            "location": "query",
+            "default": "moderate",
+            "enum": [
+              "safeSearchSettingUnspecified",
+              "none",
+              "moderate",
+              "strict"
+            ]
+          },
+          "location": {
+            "type": "string",
+            "location": "query"
+          },
+          "regionCode": {
+            "location": "query",
+            "type": "string"
+          },
+          "order": {
+            "type": "string",
+            "location": "query",
+            "default": "relevance",
+            "enum": [
+              "searchSortUnspecified",
+              "date",
+              "rating",
+              "viewCount",
+              "relevance",
+              "title",
+              "videoCount"
+            ]
+          },
+          "maxResults": {
+            "format": "uint32",
+            "default": "5",
+            "minimum": "0",
+            "type": "integer",
+            "maximum": "50",
+            "location": "query"
+          },
+          "locationRadius": {
+            "location": "query",
+            "type": "string"
+          },
+          "videoSyndicated": {
+            "type": "string",
+            "location": "query",
+            "enum": [
+              "videoSyndicatedUnspecified",
+              "any",
+              "true"
+            ]
+          },
+          "channelId": {
+            "location": "query",
+            "type": "string"
+          },
+          "videoEmbeddable": {
+            "enum": [
+              "videoEmbeddableUnspecified",
+              "any",
+              "true"
+            ],
+            "location": "query",
+            "type": "string"
+          },
+          "videoCategoryId": {
+            "location": "query",
+            "type": "string"
+          },
+          "relevanceLanguage": {
+            "type": "string",
+            "location": "query"
+          },
+          "pageToken": {
+            "type": "string",
+            "location": "query"
+          },
+          "forMine": {
+            "location": "query",
+            "type": "boolean"
+          },
+          "type": {
+            "location": "query",
+            "type": "string",
+            "repeated": true
+          },
+          "q": {
+            "location": "query",
+            "type": "string"
+          },
+          "eventType": {
+            "type": "string",
+            "location": "query",
+            "enum": [
+              "none",
+              "upcoming",
+              "live",
+              "completed"
+            ]
+          },
+          "videoCaption": {
+            "type": "string",
+            "location": "query",
+            "enum": [
+              "videoCaptionUnspecified",
+              "any",
+              "closedCaption",
+              "none"
+            ]
+          },
+          "part": {
+            "location": "query",
+            "type": "string",
+            "repeated": true,
+            "required": true
+          },
+          "videoPaidProductPlacement": {
+            "enum": [
+              "videoPaidProductPlacementUnspecified",
+              "any",
+              "true"
+            ],
+            "type": "string",
+            "location": "query"
+          },
+          "videoLicense": {
+            "type": "string",
+            "enum": [
+              "any",
+              "youtube",
+              "creativeCommon"
+            ],
+            "location": "query"
+          },
+          "publishedBefore": {
+            "location": "query",
+            "format": "google-datetime",
+            "type": "string"
+          }
+        },
+        "response": {
+          "$ref": "SearchListResponse"
+        },
+        "scopes": [
+          "https://www.googleapis.com/auth/youtube",
+          "https://www.googleapis.com/auth/youtube.force-ssl",
+          "https://www.googleapis.com/auth/youtube.readonly",
+          "https://www.googleapis.com/auth/youtubepartner"
+        ]
+      }
+    },
+    "schemas": {},
+    "x-expected-methods": {
+      "search": "search.list"
+    }
+  },
+  "photos": {
+    "name": "photoslibrary",
+    "version": "v1",
+    "rootUrl": "https://photoslibrary.googleapis.com/",
+    "servicePath": "",
+    "parameters": {
+      "upload_protocol": {
+        "location": "query",
+        "type": "string"
+      },
+      "callback": {
+        "type": "string",
+        "location": "query"
+      },
+      "uploadType": {
+        "type": "string",
+        "location": "query"
+      },
+      "$.xgafv": {
+        "location": "query",
+        "enum": [
+          "1",
+          "2"
+        ],
+        "type": "string"
+      },
+      "fields": {
+        "type": "string",
+        "location": "query"
+      },
+      "quotaUser": {
+        "type": "string",
+        "location": "query"
+      },
+      "prettyPrint": {
+        "type": "boolean",
+        "location": "query",
+        "default": "true"
+      },
+      "access_token": {
+        "location": "query",
+        "type": "string"
+      },
+      "key": {
+        "type": "string",
+        "location": "query"
+      },
+      "alt": {
+        "location": "query",
+        "default": "json",
+        "enum": [
+          "json",
+          "media",
+          "proto"
+        ],
+        "type": "string"
+      },
+      "oauth_token": {
+        "type": "string",
+        "location": "query"
+      }
+    },
+    "methods": {},
+    "schemas": {},
+    "x-expected-methods": {}
+  }
+}

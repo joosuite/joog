@@ -1,0 +1,3146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:joog:wrappers",
+  "title": "Short command parameters",
+  "description": "Select the command under $defs. Validate the combined JSON file and command-line parameters. Short commands belong to the wrappers; joog retains its existing syntax.",
+  "x-wrappers": {
+    "jmail": {
+      "service": "mail",
+      "default": "inbox",
+      "description": "Read, compose, and organise mail."
+    },
+    "jdrive": {
+      "service": "drive",
+      "default": "ls",
+      "description": "Find, transfer, and share files."
+    },
+    "jcal": {
+      "service": "calendar",
+      "default": "today",
+      "description": "Manage events and find available times."
+    },
+    "jsheets": {
+      "service": "sheets",
+      "default": "ls",
+      "description": "Read and change spreadsheet cells."
+    },
+    "jdocs": {
+      "service": "docs",
+      "default": "ls",
+      "description": "Read and edit documents."
+    },
+    "jslides": {
+      "service": "slides",
+      "default": "ls",
+      "description": "Build and edit presentations."
+    },
+    "jforms": {
+      "service": "forms",
+      "default": "ls",
+      "description": "Build forms and read responses."
+    },
+    "jtasks": {
+      "service": "tasks",
+      "default": "ls",
+      "description": "Manage tasks and task lists."
+    },
+    "jcontacts": {
+      "service": "contacts",
+      "default": "ls",
+      "description": "Find and maintain contacts."
+    },
+    "jyt": {
+      "service": "youtube",
+      "default": "info",
+      "description": "Find videos and manage your channel and playlists."
+    },
+    "jphotos": {
+      "service": "photos",
+      "default": "ls",
+      "description": "Manage photos, videos, and albums created by this application."
+    }
+  },
+  "$defs": {
+    "common": {
+      "properties": {
+        "home": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Store credentials and cache in this directory.",
+          "x-advanced": true,
+          "x-label": "PATH"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600,
+          "default": 30,
+          "description": "Request timeout in seconds.",
+          "x-advanced": true
+        },
+        "json": {
+          "type": "boolean",
+          "default": false,
+          "description": "Print the same result data as JSON."
+        }
+      }
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "body": {
+      "type": "string",
+      "x-text": true,
+      "description": "Inline text. Use \\n for a new line."
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "format": "local-file",
+      "description": "Existing local file, up to 1 GiB.",
+      "x-max-bytes": 1073741824
+    },
+    "out": {
+      "type": "string",
+      "minLength": 1,
+      "format": "new-file",
+      "description": "Save to this new file. Existing files are never overwritten."
+    },
+    "limit": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        {
+          "const": "all"
+        }
+      ],
+      "default": 20,
+      "description": "Maximum results, or all."
+    },
+    "strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "x-repeat": true
+    },
+    "emails": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "x-repeat": true,
+      "description": "Email addresses."
+    },
+    "date": {
+      "type": "string",
+      "format": "local-date",
+      "description": "YYYY-MM-DD, today, or tomorrow."
+    },
+    "time": {
+      "type": "string",
+      "format": "local-time",
+      "description": "RFC 3339, YYYY-MM-DD HH:MM, or tomorrow HH:MM."
+    },
+    "duration": {
+      "type": "string",
+      "format": "duration",
+      "description": "Positive duration, such as 30m or 1h, up to 366 days.",
+      "x-max-seconds": 31622400,
+      "x-label": "DURATION"
+    },
+    "zone": {
+      "type": "string",
+      "format": "iana-time-zone",
+      "description": "IANA timezone, such as Europe/Paris. Defaults to the calendar timezone."
+    },
+    "calendar": {
+      "type": "string",
+      "minLength": 1,
+      "default": "primary",
+      "description": "Calendar ID."
+    },
+    "list": {
+      "type": "string",
+      "minLength": 1,
+      "default": "@default",
+      "description": "Task list ID."
+    },
+    "file": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "drive",
+      "x-label": "FILE",
+      "description": "File ID or Google Drive URL."
+    },
+    "document": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "docs",
+      "x-label": "DOCUMENT",
+      "description": "Document ID or Google Docs URL."
+    },
+    "sheet": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "sheets",
+      "x-label": "SHEET",
+      "description": "Spreadsheet ID or URL."
+    },
+    "deck": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "slides",
+      "x-label": "PRESENTATION",
+      "description": "Presentation ID or URL."
+    },
+    "form": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "forms",
+      "x-label": "FORM",
+      "description": "Form ID or editor URL."
+    },
+    "video": {
+      "type": "string",
+      "minLength": 1,
+      "x-resource": "youtube",
+      "x-label": "VIDEO",
+      "description": "Video ID or YouTube URL."
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "reader",
+        "writer",
+        "commenter"
+      ],
+      "default": "reader",
+      "description": "Access granted to the recipient."
+    },
+    "privacy": {
+      "type": "string",
+      "enum": [
+        "private",
+        "unlisted",
+        "public"
+      ],
+      "default": "private",
+      "description": "Visibility. Defaults to private."
+    },
+    "jmail.inbox": {
+      "description": "Show recent inbox messages.",
+      "type": "object",
+      "properties": {
+        "unread": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show only unread messages."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.find": {
+      "description": "Search messages.",
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "QUERY",
+          "description": "Gmail search query."
+        },
+        "from": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        },
+        "after": {
+          "$ref": "#/$defs/date"
+        },
+        "has": {
+          "const": "attachment",
+          "description": "Require an attachment."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.read": {
+      "description": "Read a message and list its attachments.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "MESSAGE",
+          "description": "Message ID."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.send": {
+      "description": "Compose and send a message. You can omit send when supplying to:, cc:, or bcc:.",
+      "type": "object",
+      "properties": {
+        "to": {
+          "$ref": "#/$defs/emails"
+        },
+        "cc": {
+          "$ref": "#/$defs/emails"
+        },
+        "bcc": {
+          "$ref": "#/$defs/emails"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Message subject.",
+          "format": "single-line"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "bodyFile": {
+          "$ref": "#/$defs/path",
+          "description": "Read the message body from a UTF-8 file."
+        },
+        "attachments": {
+          "x-key": "attach",
+          "description": "Local attachment paths.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path"
+          },
+          "x-repeat": true,
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "to"
+              ]
+            },
+            {
+              "required": [
+                "cc"
+              ]
+            },
+            {
+              "required": [
+                "bcc"
+              ]
+            }
+          ],
+          "description": "Provide at least one recipient with to:, cc:, or bcc:."
+        },
+        {
+          "not": {
+            "required": [
+              "body",
+              "bodyFile"
+            ]
+          },
+          "description": "Use body: for inline text or body-file: to read a file."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.reply": {
+      "description": "Reply to a message with its threading headers.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "MESSAGE",
+          "description": "Resource ID shown by its list command."
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "bodyFile": {
+          "$ref": "#/$defs/path"
+        },
+        "all": {
+          "type": "boolean",
+          "default": false,
+          "description": "Reply to all original recipients, excluding your account."
+        },
+        "attachments": {
+          "x-key": "attach",
+          "description": "Local attachment files.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path"
+          },
+          "x-repeat": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "body"
+              ]
+            },
+            {
+              "required": [
+                "bodyFile"
+              ]
+            }
+          ],
+          "description": "Write a reply with body: or read it from body-file:."
+        },
+        {
+          "not": {
+            "required": [
+              "body",
+              "bodyFile"
+            ]
+          },
+          "description": "Write a reply with body: or read it from body-file:."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.forward": {
+      "description": "Forward a message, preserving the original MIME message and attachments.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "MESSAGE",
+          "description": "Resource ID shown by its list command."
+        },
+        "to": {
+          "$ref": "#/$defs/emails"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "bodyFile": {
+          "$ref": "#/$defs/path"
+        }
+      },
+      "required": [
+        "target",
+        "to"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "not": {
+            "required": [
+              "body",
+              "bodyFile"
+            ]
+          },
+          "description": "Write text with body: or read it from body-file:."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.draft": {
+      "description": "Save a draft. Recipients may be omitted.",
+      "type": "object",
+      "properties": {
+        "to": {
+          "$ref": "#/$defs/emails"
+        },
+        "cc": {
+          "$ref": "#/$defs/emails"
+        },
+        "bcc": {
+          "$ref": "#/$defs/emails"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Message subject.",
+          "format": "single-line"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "bodyFile": {
+          "$ref": "#/$defs/path"
+        },
+        "attachments": {
+          "x-key": "attach",
+          "description": "Local attachment files.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path"
+          },
+          "x-repeat": true,
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "not": {
+            "required": [
+              "body",
+              "bodyFile"
+            ]
+          },
+          "description": "Write text with body: or read it from body-file:."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.drafts": {
+      "description": "List saved drafts.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.send-draft": {
+      "description": "Send an existing draft.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "DRAFT",
+          "description": "Resource ID shown by its list command."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.trash": {
+      "description": "Move a message to Trash.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "MESSAGE",
+          "description": "Resource ID shown by its list command."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jmail.mark": {
+      "description": "Change a message's read or star state.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "MESSAGE",
+          "description": "Resource ID shown by its list command."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "read",
+            "unread",
+            "starred",
+            "unstarred"
+          ],
+          "x-position": 2,
+          "x-label": "STATE",
+          "description": "New message state."
+        }
+      },
+      "required": [
+        "target",
+        "state"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.ls": {
+      "description": "List files in a folder. Defaults to the root folder.",
+      "type": "object",
+      "properties": {
+        "folder": {
+          "$ref": "#/$defs/file",
+          "default": "root"
+        },
+        "type": {
+          "$ref": "#/$defs/text",
+          "description": "folder, document, spreadsheet, presentation, image, pdf, or a MIME type."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.find": {
+      "description": "Find files by name or content.",
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TEXT",
+          "description": "Search text."
+        },
+        "folder": {
+          "$ref": "#/$defs/file"
+        },
+        "type": {
+          "$ref": "#/$defs/text",
+          "description": "Item type."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.info": {
+      "description": "Show file metadata, owners, location, and sharing.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.get": {
+      "description": "Download a file or export a Google document.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "docx",
+            "xlsx",
+            "pptx",
+            "csv",
+            "txt",
+            "html",
+            "odt",
+            "ods",
+            "odp"
+          ],
+          "description": "Export format for native Google files. Defaults to pdf."
+        }
+      },
+      "required": [
+        "target",
+        "out"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.put": {
+      "description": "Upload a local file.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path",
+          "x-position": 1,
+          "x-label": "PATH"
+        },
+        "folder": {
+          "$ref": "#/$defs/file"
+        },
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.mkdir": {
+      "description": "Create a folder.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "NAME",
+          "description": "Name."
+        },
+        "folder": {
+          "$ref": "#/$defs/file"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.move": {
+      "description": "Move or rename a file, preserving its other metadata.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        },
+        "to": {
+          "$ref": "#/$defs/file",
+          "description": "Destination folder."
+        },
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "to"
+              ]
+            },
+            {
+              "required": [
+                "name"
+              ]
+            }
+          ],
+          "description": "Provide to: to move the file or name: to rename it."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.copy": {
+      "description": "Copy a file.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        },
+        "to": {
+          "$ref": "#/$defs/file"
+        },
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.share": {
+      "description": "Grant someone access to a file.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        },
+        "to": {
+          "type": "string",
+          "format": "email",
+          "description": "Destination or recipient."
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "notify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Send email notifications to affected people."
+        }
+      },
+      "required": [
+        "target",
+        "to"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.trash": {
+      "description": "Move a file to Trash.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdrive.restore": {
+      "description": "Restore a file from Trash.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/file",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.today": {
+      "description": "Show today's events in calendar time.",
+      "type": "object",
+      "properties": {
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.week": {
+      "description": "Show this week's events, Monday through Sunday.",
+      "type": "object",
+      "properties": {
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.find": {
+      "description": "Find events. Date bounds use calendar time.",
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TEXT",
+          "description": "Search text."
+        },
+        "from": {
+          "$ref": "#/$defs/date"
+        },
+        "until": {
+          "$ref": "#/$defs/date"
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.show": {
+      "description": "Show an event and attendee responses.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "EVENT",
+          "description": "Resource ID shown by its list command."
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.add": {
+      "description": "Create a timed or all-day event.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "at": {
+          "$ref": "#/$defs/time"
+        },
+        "on": {
+          "$ref": "#/$defs/date"
+        },
+        "for": {
+          "$ref": "#/$defs/duration",
+          "description": "Timed event duration, such as 30m or 1h. Maximum 366 days.",
+          "default": "30m",
+          "x-default-when": {
+            "required": [
+              "at"
+            ]
+          }
+        },
+        "with": {
+          "$ref": "#/$defs/emails"
+        },
+        "where": {
+          "$ref": "#/$defs/text",
+          "description": "Event location or meeting URL."
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "at"
+              ]
+            },
+            {
+              "required": [
+                "on"
+              ]
+            }
+          ],
+          "description": "Set a time with at: or an all-day date with on:."
+        },
+        {
+          "not": {
+            "required": [
+              "at",
+              "on"
+            ]
+          },
+          "description": "Set a time with at: or an all-day date with on:."
+        },
+        {
+          "not": {
+            "required": [
+              "on",
+              "for"
+            ]
+          },
+          "description": "for: sets a timed event's duration; omit it for all-day events."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.move": {
+      "description": "Reschedule an event. Its duration is preserved unless for: is supplied.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "EVENT",
+          "description": "Resource ID shown by its list command."
+        },
+        "at": {
+          "$ref": "#/$defs/time"
+        },
+        "for": {
+          "$ref": "#/$defs/duration"
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        }
+      },
+      "required": [
+        "target",
+        "at"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.cancel": {
+      "description": "Cancel an event.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "EVENT",
+          "description": "Resource ID shown by its list command."
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "notify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Send email notifications to affected people."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.free": {
+      "description": "Find common free slots from 09:00 to 18:00 in calendar time.",
+      "type": "object",
+      "properties": {
+        "with": {
+          "$ref": "#/$defs/emails"
+        },
+        "on": {
+          "$ref": "#/$defs/date",
+          "default": "today"
+        },
+        "for": {
+          "$ref": "#/$defs/duration",
+          "default": "30m"
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "timezone": {
+          "$ref": "#/$defs/zone"
+        }
+      },
+      "required": [
+        "with"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcal.calendars": {
+      "description": "List available calendars.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.ls": {
+      "description": "Find spreadsheets. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.new": {
+      "description": "Create a spreadsheet.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.read": {
+      "description": "Display cells. Defaults to the first tab, A1:Z20.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "range": {
+          "$ref": "#/$defs/text",
+          "format": "cell-range",
+          "description": "A1 cell range, such as A1:D20."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.set": {
+      "description": "Set one cell to a literal value.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "cell": {
+          "$ref": "#/$defs/text",
+          "format": "single-cell",
+          "description": "One A1 cell, such as B2."
+        },
+        "value": {
+          "type": "string",
+          "description": "Literal cell value; formulas are not evaluated."
+        }
+      },
+      "required": [
+        "target",
+        "cell",
+        "value"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.append": {
+      "description": "Append literal CSV rows.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "row": {
+          "$ref": "#/$defs/strings",
+          "description": "One CSV row per row: parameter."
+        },
+        "csv": {
+          "$ref": "#/$defs/path"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "row"
+              ]
+            },
+            {
+              "required": [
+                "csv"
+              ]
+            }
+          ],
+          "description": "Provide row: values or csv:PATH."
+        },
+        {
+          "not": {
+            "required": [
+              "row",
+              "csv"
+            ]
+          },
+          "description": "Use row: for inline records or csv: for a file, choosing one."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.load": {
+      "description": "Write a CSV file starting at a cell. Values are literal.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "csv": {
+          "$ref": "#/$defs/path"
+        },
+        "at": {
+          "$ref": "#/$defs/text",
+          "format": "single-cell",
+          "default": "A1",
+          "description": "At."
+        }
+      },
+      "required": [
+        "target",
+        "csv"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.clear": {
+      "description": "Clear an explicit cell range.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "range": {
+          "$ref": "#/$defs/text",
+          "format": "cell-range",
+          "description": "A1 cell range, such as A1:D20."
+        }
+      },
+      "required": [
+        "target",
+        "range"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jsheets.export": {
+      "description": "Export one tab as CSV or the workbook in another format.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/sheet",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "csv",
+            "xlsx",
+            "pdf",
+            "ods"
+          ],
+          "default": "csv",
+          "description": "Format."
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        }
+      },
+      "required": [
+        "target",
+        "out"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "if": {
+            "required": [
+              "tab"
+            ]
+          },
+          "then": {
+            "properties": {
+              "format": {
+                "const": "csv"
+              }
+            }
+          },
+          "description": "tab: selects a CSV export. Other formats export the workbook."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.ls": {
+      "description": "Find documents. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.new": {
+      "description": "Create a document and optionally add text.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "text": {
+          "$ref": "#/$defs/body"
+        },
+        "textFile": {
+          "$ref": "#/$defs/path"
+        },
+        "folder": {
+          "$ref": "#/$defs/file"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "not": {
+            "required": [
+              "text",
+              "textFile"
+            ]
+          },
+          "description": "Supply text inline with text: or read it from text-file:."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.read": {
+      "description": "Print document text.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/document",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Document tab ID. Omit to read all tabs."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.append": {
+      "description": "Append text to a document tab.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/document",
+          "x-position": 1
+        },
+        "tab": {
+          "$ref": "#/$defs/text",
+          "description": "Tab name."
+        },
+        "text": {
+          "$ref": "#/$defs/body"
+        },
+        "textFile": {
+          "$ref": "#/$defs/path"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "text"
+              ]
+            },
+            {
+              "required": [
+                "textFile"
+              ]
+            }
+          ],
+          "description": "Supply text inline with text: or read it from text-file:."
+        },
+        {
+          "not": {
+            "required": [
+              "text",
+              "textFile"
+            ]
+          },
+          "description": "Supply text inline with text: or read it from text-file:."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.replace": {
+      "description": "Replace matching text throughout a document.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/document",
+          "x-position": 1
+        },
+        "find": {
+          "$ref": "#/$defs/text",
+          "description": "Text to find."
+        },
+        "with": {
+          "type": "string",
+          "description": "Replacement text."
+        },
+        "matchCase": {
+          "type": "boolean",
+          "default": false,
+          "description": "Match the exact letter case."
+        }
+      },
+      "required": [
+        "target",
+        "find",
+        "with"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.export": {
+      "description": "Export a document. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/document",
+          "x-position": 1
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "docx",
+            "txt",
+            "html",
+            "odt"
+          ],
+          "default": "pdf",
+          "description": "Format."
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        }
+      },
+      "required": [
+        "target",
+        "out"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jdocs.share": {
+      "description": "Grant someone access to a document. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/document",
+          "x-position": 1
+        },
+        "to": {
+          "type": "string",
+          "format": "email",
+          "description": "Destination or recipient."
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "notify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Send email notifications to affected people."
+        }
+      },
+      "required": [
+        "target",
+        "to"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.ls": {
+      "description": "Find presentations. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.new": {
+      "description": "Create a presentation or copy a template.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "template": {
+          "$ref": "#/$defs/deck"
+        },
+        "folder": {
+          "$ref": "#/$defs/file"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.slides": {
+      "description": "List slides by their visible number and title.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/deck",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.add": {
+      "description": "Add a slide and fill its title and body placeholders.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/deck",
+          "x-position": 1
+        },
+        "title": {
+          "$ref": "#/$defs/body"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "layout": {
+          "type": "string",
+          "enum": [
+            "title-body",
+            "title",
+            "section",
+            "blank"
+          ],
+          "default": "title-body",
+          "description": "Slide layout."
+        },
+        "after": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Insert after this slide number; 0 inserts first. Omit to append."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "if": {
+            "properties": {
+              "layout": {
+                "const": "blank"
+              }
+            },
+            "required": [
+              "layout"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "title"
+                  ]
+                },
+                {
+                  "required": [
+                    "body"
+                  ]
+                }
+              ]
+            }
+          },
+          "description": "A blank slide has no title or body placeholders; omit title: and body:."
+        },
+        {
+          "if": {
+            "properties": {
+              "layout": {
+                "const": "section"
+              }
+            },
+            "required": [
+              "layout"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "body"
+              ]
+            }
+          },
+          "description": "A section slide has a title only. Use layout:title-body to include body: text."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.set": {
+      "description": "Replace a slide's title or body text.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/deck",
+          "x-position": 1
+        },
+        "slide": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Visible slide number, starting at 1."
+        },
+        "title": {
+          "$ref": "#/$defs/body"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "required": [
+        "target",
+        "slide"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "title"
+              ]
+            },
+            {
+              "required": [
+                "body"
+              ]
+            }
+          ],
+          "description": "Provide title: or body: to change the slide."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.replace": {
+      "description": "Replace matching text on one slide or throughout a presentation.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/deck",
+          "x-position": 1
+        },
+        "find": {
+          "$ref": "#/$defs/text",
+          "description": "Text to find."
+        },
+        "with": {
+          "type": "string",
+          "description": "Replacement text."
+        },
+        "slide": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Visible slide number, starting at 1."
+        }
+      },
+      "required": [
+        "target",
+        "find",
+        "with"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jslides.export": {
+      "description": "Export a presentation. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/deck",
+          "x-position": 1
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "pptx",
+            "odp"
+          ],
+          "default": "pdf",
+          "description": "Format."
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        }
+      },
+      "required": [
+        "target",
+        "out"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.ls": {
+      "description": "Find forms. Requires Drive access.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.new": {
+      "description": "Create a form.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "description": {
+          "type": "string",
+          "x-text": true,
+          "description": "Description."
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.show": {
+      "description": "Show questions, publication state, and responder link.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.question": {
+      "description": "Append a question to a form.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        },
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 2,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "paragraph",
+            "choice",
+            "checkboxes",
+            "date"
+          ],
+          "default": "text",
+          "description": "Item type."
+        },
+        "required": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require an answer to this question."
+        },
+        "options": {
+          "$ref": "#/$defs/strings",
+          "x-key": "option",
+          "description": "Answer choices."
+        }
+      },
+      "required": [
+        "target",
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "choice",
+                  "checkboxes"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "options"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "options"
+              ]
+            }
+          },
+          "description": "Choice and checkbox questions require option: values. Other question types do not accept options."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.answers": {
+      "description": "Read responses or save a CSV file.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        },
+        "since": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Responses submitted at or after this RFC 3339 timestamp."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.publish": {
+      "description": "Publish a form and return its responder link.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.close": {
+      "description": "Stop accepting responses while preserving publication state.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jforms.open": {
+      "description": "Resume accepting responses on a published form.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/form",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.ls": {
+      "description": "Show incomplete tasks in a list.",
+      "type": "object",
+      "properties": {
+        "list": {
+          "$ref": "#/$defs/list"
+        },
+        "due": {
+          "$ref": "#/$defs/date"
+        },
+        "completed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include completed tasks."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.add": {
+      "description": "Create a task.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "due": {
+          "$ref": "#/$defs/date"
+        },
+        "notes": {
+          "$ref": "#/$defs/body"
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.show": {
+      "description": "Show task details.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TASK",
+          "description": "Resource ID shown by its list command."
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.done": {
+      "description": "Mark a task complete.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TASK",
+          "description": "Resource ID shown by its list command."
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.undo": {
+      "description": "Mark a task incomplete.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TASK",
+          "description": "Resource ID shown by its list command."
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.set": {
+      "description": "Change selected task fields.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TASK",
+          "description": "Resource ID shown by its list command."
+        },
+        "title": {
+          "$ref": "#/$defs/text",
+          "description": "Title."
+        },
+        "due": {
+          "$ref": "#/$defs/date"
+        },
+        "notes": {
+          "$ref": "#/$defs/body"
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "title"
+              ]
+            },
+            {
+              "required": [
+                "due"
+              ]
+            },
+            {
+              "required": [
+                "notes"
+              ]
+            }
+          ],
+          "description": "Provide title:, due:, or notes: to change the task."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.delete": {
+      "description": "Delete a task.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TASK",
+          "description": "Resource ID shown by its list command."
+        },
+        "list": {
+          "$ref": "#/$defs/list"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.lists": {
+      "description": "List task lists.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jtasks.new-list": {
+      "description": "Create a task list.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.ls": {
+      "description": "List contacts.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.find": {
+      "description": "Find contacts by name, email, or phone.",
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TEXT",
+          "description": "Search text."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.show": {
+      "description": "Show contact details.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "CONTACT",
+          "x-resource": "contacts",
+          "description": "Resource ID shown by its list command."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.new": {
+      "description": "Create a contact.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "NAME",
+          "description": "Name."
+        },
+        "email": {
+          "$ref": "#/$defs/emails"
+        },
+        "phone": {
+          "$ref": "#/$defs/strings",
+          "description": "Phone numbers."
+        },
+        "company": {
+          "$ref": "#/$defs/text",
+          "description": "Company name."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.set": {
+      "description": "Change named fields and preserve all others. Repeated email: and phone: values replace those lists.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "CONTACT",
+          "x-resource": "contacts",
+          "description": "Resource ID shown by its list command."
+        },
+        "name": {
+          "$ref": "#/$defs/text",
+          "description": "Name."
+        },
+        "email": {
+          "$ref": "#/$defs/emails"
+        },
+        "phone": {
+          "$ref": "#/$defs/strings",
+          "description": "Phone numbers."
+        },
+        "company": {
+          "$ref": "#/$defs/text",
+          "description": "Company name."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "name"
+              ]
+            },
+            {
+              "required": [
+                "email"
+              ]
+            },
+            {
+              "required": [
+                "phone"
+              ]
+            },
+            {
+              "required": [
+                "company"
+              ]
+            }
+          ],
+          "description": "Provide name:, email:, phone:, or company: to change the contact."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jcontacts.delete": {
+      "description": "Delete a contact.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "CONTACT",
+          "x-resource": "contacts",
+          "description": "Resource ID shown by its list command."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.find": {
+      "description": "Search YouTube.",
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TEXT",
+          "description": "Search text."
+        },
+        "channel": {
+          "$ref": "#/$defs/text",
+          "description": "Channel ID."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "video",
+            "channel",
+            "playlist"
+          ],
+          "default": "video",
+          "description": "Item type."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.info": {
+      "description": "Show video details, or your channel when VIDEO is omitted.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/video",
+          "x-position": 1
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.comments": {
+      "description": "Read top-level comments.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/video",
+          "x-position": 1
+        },
+        "order": {
+          "type": "string",
+          "enum": [
+            "newest",
+            "relevance"
+          ],
+          "default": "newest",
+          "description": "Sort order."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.like": {
+      "description": "Like a video.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/video",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.unlike": {
+      "description": "Remove your rating from a video.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/video",
+          "x-position": 1
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.playlists": {
+      "description": "List your playlists or those of a channel.",
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/text",
+          "description": "Channel ID."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.playlist": {
+      "description": "List videos in a playlist.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "PLAYLIST",
+          "x-resource": "playlist",
+          "description": "Resource ID shown by its list command."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.new-playlist": {
+      "description": "Create a playlist. Defaults to private.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        },
+        "privacy": {
+          "$ref": "#/$defs/privacy"
+        },
+        "description": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.add": {
+      "description": "Append videos to a playlist.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "PLAYLIST",
+          "x-resource": "playlist",
+          "description": "Resource ID shown by its list command."
+        },
+        "videos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/video"
+          },
+          "x-key": "video",
+          "x-repeat": true,
+          "description": "Video IDs or YouTube URLs."
+        }
+      },
+      "required": [
+        "target",
+        "videos"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jyt.upload": {
+      "description": "Upload a video. Defaults to private.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path",
+          "x-position": 1,
+          "x-label": "PATH"
+        },
+        "title": {
+          "$ref": "#/$defs/text",
+          "description": "Title."
+        },
+        "category": {
+          "$ref": "#/$defs/text",
+          "description": "Category ID or an available category name."
+        },
+        "privacy": {
+          "$ref": "#/$defs/privacy"
+        },
+        "description": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "category"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.ls": {
+      "description": "List app-created media, optionally in an app-created album.",
+      "type": "object",
+      "properties": {
+        "album": {
+          "$ref": "#/$defs/text",
+          "description": "App-created album ID."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.find": {
+      "description": "Filter app-created media by date and type.",
+      "type": "object",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/date"
+        },
+        "until": {
+          "$ref": "#/$defs/date"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "photo",
+            "video"
+          ],
+          "description": "Item type."
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "from"
+              ]
+            },
+            {
+              "required": [
+                "until"
+              ]
+            },
+            {
+              "required": [
+                "type"
+              ]
+            }
+          ],
+          "description": "Provide from:, until:, or type: to filter media."
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.show": {
+      "description": "Show app-created media details.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "PHOTO",
+          "description": "Resource ID shown by its list command."
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.get": {
+      "description": "Download app-created media.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "PHOTO",
+          "description": "Resource ID shown by its list command."
+        },
+        "out": {
+          "$ref": "#/$defs/out"
+        }
+      },
+      "required": [
+        "target",
+        "out"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.put": {
+      "description": "Upload a photo or video and create its media item.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path",
+          "x-position": 1,
+          "x-label": "PATH"
+        },
+        "album": {
+          "$ref": "#/$defs/text",
+          "description": "App-created album ID."
+        },
+        "caption": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.albums": {
+      "description": "List app-created albums.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/$defs/limit"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.new-album": {
+      "description": "Create an album.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "TITLE",
+          "description": "Title."
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.add": {
+      "description": "Add app-created media to an album.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "ALBUM",
+          "description": "Resource ID shown by its list command."
+        },
+        "photos": {
+          "$ref": "#/$defs/strings",
+          "x-key": "photo",
+          "description": "App-created media IDs."
+        }
+      },
+      "required": [
+        "target",
+        "photos"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jphotos.remove": {
+      "description": "Remove media from an album without deleting the media.",
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/text",
+          "x-position": 1,
+          "x-label": "ALBUM",
+          "description": "Resource ID shown by its list command."
+        },
+        "photos": {
+          "$ref": "#/$defs/strings",
+          "x-key": "photo",
+          "description": "App-created media IDs."
+        }
+      },
+      "required": [
+        "target",
+        "photos"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

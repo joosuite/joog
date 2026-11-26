@@ -1,0 +1,223 @@
+[
+  {
+    "service": "drive",
+    "command": "drives.create",
+    "input": {
+      "requestId": "12345678-1234-4234-8234-123456789012",
+      "name": "Fixture drive"
+    },
+    "method": "POST",
+    "path": "/drive/v3/drives",
+    "query": {
+      "requestId": "12345678-1234-4234-8234-123456789012"
+    },
+    "body": {
+      "name": "Fixture drive"
+    }
+  },
+  {
+    "service": "drive",
+    "command": "drives.get",
+    "input": {
+      "driveId": "fixture-drive"
+    },
+    "method": "GET",
+    "path": "/drive/v3/drives/fixture-drive",
+    "query": {},
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "drives.update",
+    "input": {
+      "driveId": "fixture-drive",
+      "name": "Renamed fixture"
+    },
+    "method": "PATCH",
+    "path": "/drive/v3/drives/fixture-drive",
+    "query": {},
+    "body": {
+      "name": "Renamed fixture"
+    }
+  },
+  {
+    "service": "drive",
+    "command": "drives.hide",
+    "input": {
+      "driveId": "fixture-drive"
+    },
+    "method": "POST",
+    "path": "/drive/v3/drives/fixture-drive/hide",
+    "query": {},
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "drives.unhide",
+    "input": {
+      "driveId": "fixture-drive"
+    },
+    "method": "POST",
+    "path": "/drive/v3/drives/fixture-drive/unhide",
+    "query": {},
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "drives.delete",
+    "input": {
+      "driveId": "fixture-drive"
+    },
+    "method": "DELETE",
+    "path": "/drive/v3/drives/fixture-drive",
+    "query": {},
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "files.empty-trash",
+    "input": {
+      "driveId": "fixture-drive"
+    },
+    "method": "DELETE",
+    "path": "/drive/v3/files/trash",
+    "query": {
+      "driveId": "fixture-drive"
+    },
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "files.generate-cse-token",
+    "input": {
+      "parent": "fixture-folder"
+    },
+    "method": "GET",
+    "path": "/drive/v3/files/generateCseToken",
+    "query": {
+      "parent": "fixture-folder"
+    },
+    "body": null
+  },
+  {
+    "service": "drive",
+    "command": "files.modify-labels",
+    "input": {
+      "fileId": "fixture-file",
+      "labelModifications": [
+        {
+          "labelId": "fixture-label",
+          "fieldModifications": [
+            {
+              "fieldId": "fixture-field",
+              "setTextValues": [
+                "Synthetic label value"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "method": "POST",
+    "path": "/drive/v3/files/fixture-file/modifyLabels",
+    "query": {},
+    "body": {
+      "labelModifications": [
+        {
+          "labelId": "fixture-label",
+          "fieldModifications": [
+            {
+              "fieldId": "fixture-field",
+              "setTextValues": [
+                "Synthetic label value"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "service": "contacts",
+    "command": "people.list-directory-people",
+    "input": {
+      "readMask": "names,emailAddresses",
+      "sources": [
+        "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+      ]
+    },
+    "method": "GET",
+    "path": "/v1/people:listDirectoryPeople",
+    "query": {
+      "readMask": "names,emailAddresses",
+      "sources": "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+    },
+    "body": null
+  },
+  {
+    "service": "contacts",
+    "command": "people.search-directory-people",
+    "input": {
+      "readMask": "names,emailAddresses",
+      "sources": [
+        "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+      ],
+      "query": "Fixture"
+    },
+    "method": "GET",
+    "path": "/v1/people:searchDirectoryPeople",
+    "query": {
+      "readMask": "names,emailAddresses",
+      "sources": "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE",
+      "query": "Fixture"
+    },
+    "body": null
+  },
+  {
+    "service": "calendar",
+    "command": "calendars.clear",
+    "input": {
+      "calendarId": "primary"
+    },
+    "method": "POST",
+    "path": "/calendar/v3/calendars/primary/clear",
+    "query": {},
+    "body": null
+  },
+  {
+    "service": "calendar",
+    "command": "calendars.transfer-ownership",
+    "input": {
+      "calendarId": "fixture-calendar",
+      "newDataOwner": "fixture@example.com",
+      "useAdminAccess": true
+    },
+    "method": "POST",
+    "path": "/calendar/v3/calendars/fixture-calendar/transferOwnership",
+    "query": {
+      "newDataOwner": "fixture@example.com",
+      "useAdminAccess": "true"
+    },
+    "body": null
+  },
+  {
+    "service": "docs",
+    "command": "delete-suggestion",
+    "input": {
+      "documentId": "fixture-document",
+      "suggestionId": "fixture-suggestion"
+    },
+    "method": "POST",
+    "path": "/v1/documents/fixture-document:batchUpdate",
+    "query": {},
+    "body": {
+      "requests": [
+        {
+          "deleteSuggestion": {
+            "suggestionId": "fixture-suggestion"
+          }
+        }
+      ]
+    }
+  }
+]
