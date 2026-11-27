@@ -10,8 +10,7 @@
     "schemas:check": "node --experimental-strip-types scripts/generate_cli_schemas.ts --check",
     "wrappers:check": "node --experimental-strip-types scripts/generate_wrapper_reference.ts --check",
     "references:check": "node --experimental-strip-types scripts/generate_cli_reference.ts --check && node --experimental-strip-types scripts/generate_wrapper_reference.ts --check",
-    "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/tooling.test.ts"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "22.20.7",

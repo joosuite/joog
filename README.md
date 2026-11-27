@@ -34,8 +34,7 @@ cargo build --release --locked
 cargo run --release --locked --example install_wrappers -- --directory target/release
 ```
 
-Joog and its wrappers are native executables. Maintainer generators and release
-packaging use TypeScript with Node.js 22.6 or newer.
+Joog and its wrappers are native executables.
 
 ## Sign in
 

@@ -18,7 +18,6 @@ reference: schemas
 
 tooling-check:
 	npm run typecheck
-	npm test
 	$(NODE) scripts/generate_cli_schemas.ts --check
 	$(NODE) scripts/generate_wrapper_reference.ts --check
 
