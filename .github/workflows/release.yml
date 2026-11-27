@@ -4,7 +4,12 @@ on:
   push:
     tags: ['v*']
   pull_request:
-    paths: ['.github/workflows/release.yml']
+    paths:
+      - '.github/workflows/release.yml'
+      - 'scripts/check_release_version.ts'
+      - 'scripts/package_release.ts'
+      - 'scripts/shared.ts'
+      - 'package.json'
   workflow_dispatch:
     inputs:
       tag:
@@ -17,7 +22,6 @@ permissions:
 
 env:
   RELEASE_TAG: ${{ inputs.tag || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'v0.1.0' }}
-  PYTHONUTF8: '1'
 
 jobs:
   package:
@@ -49,19 +53,25 @@ jobs:
           ref: ${{ env.RELEASE_TAG }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Check out release tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: .release-tooling
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /package.json
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22'
       - name: Install Rust
         run: |
           rustup toolchain install stable --profile minimal
           rustup target add --toolchain stable "$TARGET"
       - name: Check version tag
-        run: |
-          python - <<'PY'
-          import json, os, subprocess
-          metadata = json.loads(subprocess.check_output(['cargo', '+stable', 'metadata', '--locked', '--no-deps', '--format-version', '1'], text=True))
-          version = metadata['packages'][0]['version']
-          if os.environ['RELEASE_TAG'] != 'v' + version:
-              raise SystemExit('The tag must match the Cargo package version.')
-          PY
+        run: node --experimental-strip-types .release-tooling/scripts/check_release_version.ts --root "$GITHUB_WORKSPACE"
       - name: Test tagged source
         run: cargo +stable test --locked --target "$TARGET"
       - name: Build native executables
@@ -69,42 +79,7 @@ jobs:
       - name: Install wrapper entry points
         run: cargo +stable run --release --locked --target "$TARGET" --example install_wrappers -- --directory "target/$TARGET/release"
       - name: Package and smoke-test downloads
-        run: |
-          python - <<'PY'
-          import hashlib, json, os, pathlib, shutil, subprocess
-          tag, target = os.environ['RELEASE_TAG'], os.environ['TARGET']
-          suffix = '.exe' if os.name == 'nt' else ''
-          source = pathlib.Path('target') / target / 'release'
-          output = pathlib.Path('dist')
-          stage = output / f'joog-{tag}-{target}'
-          stage.mkdir(parents=True)
-          wrappers = json.loads(pathlib.Path('schemas/wrappers.schema.json').read_text(encoding='utf-8'))['x-wrappers']
-          for name in ['joog', *wrappers]:
-              executable = (source / (name + suffix)).resolve()
-              # Invoke the wrapper path, preserving its executable name.
-              invocation = (source / (name + suffix)).absolute()
-              result = subprocess.run([str(invocation), '--version' if name == 'joog' else '--help'], capture_output=True, text=True, encoding='utf-8', check=True)
-              expected = 'joog ' + tag[1:] if name == 'joog' else f'Usage: {name} ACCOUNT'
-              if expected not in result.stdout or not executable.is_file():
-                  raise SystemExit(f'Native executable verification failed: {name}')
-              shutil.copy2(invocation, stage / invocation.name, follow_symlinks=False)
-          for name in ['README.md', 'LICENSE', 'docs', 'schemas', 'examples/requests', 'assets/brand/logo.png', 'assets/brand/icon.png']:
-              original, destination = pathlib.Path(name), stage / name
-              destination.parent.mkdir(parents=True, exist_ok=True)
-              if original.is_dir():
-                  shutil.copytree(original, destination)
-              else:
-                  shutil.copy2(original, destination)
-          commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-          (stage / 'BUILD-INFO.json').write_text(json.dumps({'version':tag[1:], 'tag':tag, 'target':target, 'commit':commit}, indent=2) + '\n', encoding='utf-8')
-          archive = pathlib.Path(shutil.make_archive(str(stage), 'zip' if os.name == 'nt' else 'gztar', root_dir=output, base_dir=stage.name))
-          digest = hashlib.sha256()
-          with archive.open('rb') as stream:
-              for chunk in iter(lambda: stream.read(1024 * 1024), b''):
-                  digest.update(chunk)
-          pathlib.Path(str(archive) + '.sha256').write_text(f'{digest.hexdigest()}  {archive.name}\n', encoding='utf-8')
-          print(f'Packaged {len(wrappers) + 1} verified native executables: {archive.name}')
-          PY
+        run: node --experimental-strip-types .release-tooling/scripts/package_release.ts --root "$GITHUB_WORKSPACE"
       - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: release-${{ matrix.target }}

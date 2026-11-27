@@ -22,7 +22,10 @@ make build
 ```
 
 Rust and Cargo are sufficient to build the native executable and its wrappers.
-Python 3 is needed when regenerating the schemas or reference documentation.
+Maintainer scripts use TypeScript with Node.js 22.6 or newer. Install the
+type-checking dependencies with `npm ci --ignore-scripts`. Generators run directly
+through Node's built-in type stripping.
+Release packaging also uses the platform's `tar` utility.
 
 ## Keep command contracts consistent
 
@@ -54,8 +57,7 @@ Run the relevant tests while developing, then run the checks used by CI:
 
 ```sh
 make ci
-python3 scripts/generate_cli_schemas.py --check
-python3 scripts/generate_wrapper_reference.py --check
+make tooling-check
 ```
 
 Add tests for behavior changes, regressions, and validation boundaries. Do not

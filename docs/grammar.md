@@ -20,9 +20,8 @@ directly from the workspace:
 
 `make install` updates the installed `joog` executable.
 
-`joog` and its wrappers run without Python. The build and install steps use Rust
-and Cargo. Python is used only by maintainer commands that regenerate schemas
-and documentation.
+`joog` and its wrappers are native executables. The build and install steps use
+Rust and Cargo. Maintainer generators use TypeScript with Node.js 22.6 or newer.
 
 | Option | Description |
 | --- | --- |

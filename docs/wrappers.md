@@ -3,9 +3,9 @@
 Run `make build` to create the wrappers in `bin/`. `make install` installs them
 beside `joog`. Add that directory to your `PATH`.
 
-`joog` and its wrappers are native executables. Installing and running them
-requires no Python. Building from source requires Rust and Cargo; `make build`
-and `make install` also create the wrapper entry points with a native installer.
+`joog` and its wrappers are native executables. Building from source requires
+Rust and Cargo; `make build` and `make install` also create the wrapper entry
+points with a native installer.
 
 ```sh
 jmail ACCOUNT to:lara@example.com body:"Hello\nHow are you?"

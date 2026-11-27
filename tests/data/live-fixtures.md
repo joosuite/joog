@@ -1,8 +1,8 @@
 # Live fixtures
 
 The live suite copies these files to a temporary directory before upload. They
-contain synthetic content and no personal data. Running the tests needs neither
-Python nor FFmpeg.
+contain synthetic content and no personal data. The checked-in media files are
+ready to upload; the tests do not require media-generation tools.
 
 | File | Content | Purpose |
 | --- | --- | --- |

@@ -34,8 +34,8 @@ cargo build --release --locked
 cargo run --release --locked --example install_wrappers -- --directory target/release
 ```
 
-Joog and its wrappers run without Python. Python is needed only for maintainer
-commands that regenerate schemas and documentation.
+Joog and its wrappers are native executables. Maintainer generators and release
+packaging use TypeScript with Node.js 22.6 or newer.
 
 ## Sign in
 

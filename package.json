@@ -1,0 +1,20 @@
+{
+  "name": "joog-tooling",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "schemas": "node --experimental-strip-types scripts/generate_cli_schemas.ts",
+    "schemas:check": "node --experimental-strip-types scripts/generate_cli_schemas.ts --check",
+    "wrappers:check": "node --experimental-strip-types scripts/generate_wrapper_reference.ts --check",
+    "references:check": "node --experimental-strip-types scripts/generate_cli_reference.ts --check && node --experimental-strip-types scripts/generate_wrapper_reference.ts --check",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/tooling.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.7",
+    "typescript": "5.9.3"
+  }
+}

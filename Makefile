@@ -1,19 +1,26 @@
 .DEFAULT_GOAL := build
 
 CARGO ?= $(if $(wildcard $(HOME)/.cargo/bin/cargo),$(HOME)/.cargo/bin/cargo,cargo)
+NODE ?= node --experimental-strip-types
 BIN_DIR := $(CURDIR)/bin
 INSTALL_BIN ?= $(if $(CARGO_INSTALL_ROOT),$(CARGO_INSTALL_ROOT),$(if $(CARGO_HOME),$(CARGO_HOME),$(HOME)/.cargo))/bin
 EXE := $(if $(filter Windows_NT,$(OS)),.exe,)
 
-.PHONY: build install joog fmt fmt-check lint test live-test live-cleanup live-coverage ci audit clean schemas reference
+.PHONY: build install joog fmt fmt-check lint test live-test live-cleanup live-coverage ci audit clean schemas reference tooling-check
 
 schemas:
-	python3 scripts/generate_cli_schemas.py
+	$(NODE) scripts/generate_cli_schemas.ts
 
 reference: schemas
 	$(CARGO) build --locked
-	python3 scripts/generate_cli_reference.py
-	python3 scripts/generate_wrapper_reference.py
+	$(NODE) scripts/generate_cli_reference.ts
+	$(NODE) scripts/generate_wrapper_reference.ts
+
+tooling-check:
+	npm run typecheck
+	npm test
+	$(NODE) scripts/generate_cli_schemas.ts --check
+	$(NODE) scripts/generate_wrapper_reference.ts --check
 
 build:
 	$(CARGO) build --release --locked

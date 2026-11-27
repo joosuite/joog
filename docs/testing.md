@@ -8,6 +8,11 @@ make lint
 make fmt-check
 ```
 
+For TypeScript generators and release tooling, install development dependencies
+with `npm ci --ignore-scripts`, then run `make tooling-check`. The tooling tests
+check version tags, archive contents, executable permissions, wrapper symlinks,
+and checksums without publishing a release.
+
 Local contract tests cover the service catalogs, native convenience commands,
 and wrappers. They check request translation,
 required inputs, incompatible parameters, JSON types, file overrides, output

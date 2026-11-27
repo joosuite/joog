@@ -1,5 +1,7 @@
 /target/
 /bin/
+/dist/
+/node_modules/
 .env
 .env.*
 client_secret*.json
